@@ -1,5 +1,7 @@
 # healthcheck
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/firstandthird/healthcheck.svg?token=c6b21702f872695acb328e75ea311536612294b7bcb773bacc169d0e81c899c6)](https://greenkeeper.io/)
+
 ### Install
 
 `npm install firstandthird/healthcheck -g`
