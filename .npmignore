@@ -1,0 +1,5 @@
+example
+node_modules
+.git
+.editorconfig
+nodemon.json

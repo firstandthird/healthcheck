@@ -1,0 +1,8 @@
+plugins:
+  './lib/healthcheck':
+  hapi-method-scheduler:
+    schedule: []
+  hapi-slack:
+    _enabled: false
+    tags:
+      - 'service-down'

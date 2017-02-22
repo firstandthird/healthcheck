@@ -1,0 +1,50 @@
+{
+  "name": "healthcheck",
+  "version": "1.0.0-alpha.1",
+  "description": "Uptime and service checker",
+  "bin": {
+    "healthcheck": "rapptor"
+  },
+  "scripts": {
+    "start": "rapptor",
+    "dev": "nodemon -x npm run example",
+    "example": "rapptor --config example/urls.yaml --log example/log.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstandthird/healthcheck.git"
+  },
+  "author": "First+Third",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firstandthird/healthcheck/issues"
+  },
+  "homepage": "https://github.com/firstandthird/healthcheck#readme",
+  "dependencies": {
+    "async": "2.1.5",
+    "flat-file-db": "1.0.0",
+    "hapi-method-scheduler": "firstandthird/hapi-method-scheduler#d5852f2248a2cbf199c119356b6e22bed1974769",
+    "hapi-slack": "^0.2.1",
+    "js-yaml": "3.8.1",
+    "lodash.maxby": "^4.6.0",
+    "lodash.minby": "^4.6.0",
+    "lodash.sumby": "^4.6.0",
+    "ping": "0.2.2",
+    "rapptor": "1.7.0",
+    "wreck": "^10.0.0",
+    "yargs": "6.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "1.11.0",
+    "eslint-config-firstandthird": "3.2.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint": "3.9.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true
+    },
+    "extends": "firstandthird"
+  }
+}
