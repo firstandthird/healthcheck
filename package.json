@@ -1,10 +1,7 @@
 {
   "name": "healthcheck",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Uptime and service checker",
-  "bin": {
-    "healthcheck": "./node_modules/.bin/rapptor"
-  },
   "scripts": {
     "start": "rapptor",
     "dev": "nodemon -x npm run example",
