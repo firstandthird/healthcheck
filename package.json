@@ -28,7 +28,7 @@
     "lodash.minby": "^4.6.0",
     "lodash.sumby": "^4.6.0",
     "ping": "0.2.2",
-    "rapptor": "1.7.0",
+    "rapptor": "1.8.2",
     "wreck": "^10.0.0",
     "yargs": "6.6.0"
   },
