@@ -1,14 +1,10 @@
 module.exports = {
-  method(done) {
+  method(config, done) {
     const server = this;
-    const scheduler = this.settings.app.plugins['hapi-method-scheduler'].schedule;
-    const config = server.plugins.healthcheck.config;
+    const scheduler = server.settings.app.plugins['hapi-method-scheduler'].schedule;
 
-    if (!config.slack) {
-      this.settings.app.plugins['hapi-slack'].tags = [];
-    }
     config.urls.forEach(url => {
-      scheduler.push({
+      const data = {
         method: 'checkurl',
         time: url.interval || config.interval || 'every 5 minutes',
         params: [{
@@ -18,6 +14,12 @@ module.exports = {
           statusCode: url.statusCode || 200,
           responseThreshold: url.responseThreshold || config.responseThreshold || 1000
         }]
+      };
+      scheduler.push(data);
+      server.log(['healthcheck', 'register'], {
+        name: data.params[0].name,
+        url: data.params[0].url,
+        interval: data.time
       });
     });
 
