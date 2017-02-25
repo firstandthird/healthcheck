@@ -1,4 +1,4 @@
-FROM firstandthird/node:6.10-1-nobuild
+FROM firstandthird/node:6.10-2-nobuild
 
 USER root
 RUN apk --update --no-cache --virtual add iputils
