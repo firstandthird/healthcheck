@@ -4,8 +4,9 @@ module.exports = {
     const scheduler = this.settings.app.plugins['hapi-method-scheduler'].schedule;
     const config = server.plugins.healthcheck.config;
 
-    console.log(this.settings.app.plugins['hapi-method-scheduler']);
-
+    if (!config.slack) {
+      this.settings.app.plugins['hapi-slack'].tags = [];
+    }
     config.urls.forEach(url => {
       scheduler.push({
         method: 'checkurl',
