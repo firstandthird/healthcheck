@@ -1,0 +1,9 @@
+FROM firstandthird/node:6.10-1-nobuild
+
+USER root
+RUN apk --update --no-cache --virtual add iputils
+USER node
+
+EXPOSE 8080
+CMD ["dumb-init", "npm", "run", "dev"]
+

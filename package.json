@@ -4,7 +4,7 @@
   "description": "Uptime and service checker",
   "scripts": {
     "start": "rapptor",
-    "dev": "nodemon -x npm run example",
+    "dev": "npm install && npm prune && nodemon -x npm run example",
     "example": "rapptor --config example/urls.yaml --log example/log.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

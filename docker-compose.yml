@@ -1,0 +1,9 @@
+app:
+  build: '.'
+  dockerfile: 'DockerfileDev'
+  volumes:
+    - '.:/home/app/src'
+  environment:
+    PORT: 8080
+    VIRTUAL_HOST: 'healthcheck.*'
+    FORCE_COLOR: 1
