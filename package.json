@@ -1,5 +1,5 @@
 {
-  "name": "firstandthird/healthcheck",
+  "name": "@firstandthird/healthcheck",
   "version": "1.0.0-alpha.5",
   "description": "Uptime and service checker",
   "scripts": {
