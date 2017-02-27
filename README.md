@@ -8,6 +8,10 @@
 
 `healthcheck --config urls.yaml --log logdb.json`
 
+or with a remote config
+
+`healthcheck --configUrl https://gist.githubusercontent.com/dawnerd/ea2a0bf8db74544395cbf77dba799350/raw/f60f0cf33978885ea6808f457c896dc8658b7d7e/healthcheck-test.yaml --log logdb.json`
+
 ### Config
 
 ```yaml
