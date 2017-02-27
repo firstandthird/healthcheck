@@ -17,10 +17,21 @@ module.exports = {
 
     db.put('results', results);
 
+    const tags = ['healthcheck'];
+
+    const logData = {
+      type: data.type,
+      name: data.name,
+      responseTime: result.responseTime,
+      error: result.error
+    };
+
     if (result.up) {
-      server.log(['service-up', 'healthcheck'], `${data.type} | ${data.name} - ${result.responseTime}ms`);
+      tags.push('service-up');
     } else {
-      server.log(['service-down', 'healthcheck'], `${data.type} | ${data.name} - ${result.responseTime}ms - status ${result.error}`);
+      tags.push('service-down');
     }
+
+    server.log(tags, logData);
   }
 };
