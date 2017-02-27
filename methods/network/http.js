@@ -4,9 +4,11 @@ module.exports = {
   method(data) {
     const server = this;
     const start = Date.now();
+    const config = server.plugins.healthcheck.config;
 
     Wreck.get(data.url, {
-      timeout: data.responseThreshold
+      timeout: data.responseThreshold,
+      headers: config.headers
     }, (err, res, payload) => {
       let responseText = '';
 
