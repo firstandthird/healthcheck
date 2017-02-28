@@ -27,6 +27,10 @@ module.exports = {
     };
 
     if (result.up) {
+      if (!config.verbose) {
+        return;
+      }
+
       tags.push('service-up');
     } else {
       tags.push('service-down');

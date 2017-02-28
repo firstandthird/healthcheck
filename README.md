@@ -24,6 +24,7 @@ urls:
     type: http # Can be http or ping. If ping only provide the hostname as the url.
     interval: 'every 2 seconds' # Any valid https://bunkat.github.io/later/ string
     responseThreshold: 30 # Maximum milliseconds before considering endpoint as being down
+verbose: true # Enables verbose logging | default: false
 ```
 
 ### Endpoints
