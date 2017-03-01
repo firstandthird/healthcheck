@@ -5,3 +5,5 @@ plugins:
   hapi-slack:
     tags:
       - 'service-down'
+
+ua: 'healthcheck'
