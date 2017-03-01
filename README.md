@@ -24,6 +24,7 @@ urls:
     type: http # Can be http or ping. If ping only provide the hostname as the url.
     interval: 'every 2 seconds' # Any valid https://bunkat.github.io/later/ string
     responseThreshold: 30 # Maximum milliseconds before considering endpoint as being down
+verbose: true # Enables verbose logging | default: false
 headers: # Override headers sent
   User-Agent: 'custom-check/1.0.0' # User-Agent defaults to healthcheck/<version>
 ```
