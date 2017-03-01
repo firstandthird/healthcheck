@@ -7,7 +7,7 @@ module.exports = {
     const config = server.plugins.healthcheck.config;
 
     Wreck.get(data.url, {
-      timeout: data.responseThreshold,
+      timeout: data.timeout,
       headers: config.headers
     }, (err, res, payload) => {
       let responseText = '';
@@ -20,7 +20,8 @@ module.exports = {
         timestamp: Date.now(),
         responseTime: Date.now() - start,
         error: null,
-        up: false
+        up: false,
+        slow: false
       };
 
       if (err) {
@@ -37,7 +38,20 @@ module.exports = {
         result.error = 'Text not found';
       }
 
+      if (result.responseTime > data.responseThreshold) {
+        result.slow = true;
+        result.error = 'Response threshold';
+      }
+
+      if ((!result.up || result.slow) && data.checkCount < data.retryCount) {
+        return setTimeout(() => {
+          data.checkCount++;
+          server.methods.network.http(data);
+        }, data.retryDelay);
+      }
+
       server.methods.report(data, result);
+      data.checkCount = 0; // Reset
     });
   }
 };
