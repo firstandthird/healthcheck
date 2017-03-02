@@ -23,17 +23,20 @@ module.exports = {
       type: data.type,
       name: data.name,
       responseTime: result.responseTime,
-      error: result.error
+      error: result.error,
+      retries: data.checkCount || 0
     };
 
-    if (result.up) {
+    if (!result.up) {
+      tags.push('service-down');
+    } else if (result.slow) {
+      tags.push('service-slow');
+    } else {
       if (!config.verbose) {
         return;
       }
 
       tags.push('service-up');
-    } else {
-      tags.push('service-down');
     }
 
     server.log(tags, logData);
