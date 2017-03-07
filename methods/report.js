@@ -4,9 +4,14 @@ module.exports = {
     const db = server.plugins.healthcheck.db;
     const config = server.plugins.healthcheck.config;
     const results = db.get('results') || {};
+    const status = db.get('status') || {};
 
     if (!results[data.name]) {
       results[data.name] = [];
+    }
+
+    if (!status[data.name]) {
+      status[data.name] = {};
     }
 
     if (results[data.name].length >= config.maxEntries) {
@@ -28,12 +33,31 @@ module.exports = {
     };
 
     if (!result.up) {
-      tags.push('service-down');
+      if (status[data.name].up !== false) {
+        status[data.name] = {
+          up: false,
+          downSince: Date.now()
+        };
+
+        db.put('status', status);
+
+        tags.push('service-down');
+      } else {
+        return;
+      }
     } else if (result.slow) {
       tags.push('service-slow');
     } else {
-      if (!config.verbose) {
+      const wasDown = (status[data.name].up === false);
+
+      if (!wasDown && !config.verbose) {
         return;
+      }
+
+      if (wasDown) {
+        logData.downSince = status[data.name].downSince;
+        delete status[data.name];
+        db.put('status', status);
       }
 
       tags.push('service-up');
