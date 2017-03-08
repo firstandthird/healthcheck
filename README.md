@@ -55,4 +55,6 @@ The log file is a json representation of stored data that will persist between r
 
 `service-down` - The endpoint timed out.
 
-`service-up` - Only used when verbose enabled.
+`service-restored` - The endpoint came back.
+
+`service-check` - Only used when verbose enabled.
