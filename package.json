@@ -23,7 +23,7 @@
   "dependencies": {
     "async": "2.1.5",
     "flat-file-db": "1.0.0",
-    "hapi-method-scheduler": "firstandthird/hapi-method-scheduler#d5852f2248a2cbf199c119356b6e22bed1974769",
+    "hapi-method-scheduler": "firstandthird/hapi-method-scheduler#b4205cfe0f9eb09e7d26f13bbc092b96550eddde",
     "hapi-slack": "^0.2.1",
     "js-yaml": "3.8.1",
     "lodash.maxby": "^4.6.0",
