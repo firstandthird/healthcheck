@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = {
   method(data, result) {
     const server = this;
@@ -32,6 +34,10 @@ module.exports = {
       retries: data.checkCount || 0
     };
 
+    if (config.verbose) {
+      tags.push('service-check');
+    }
+
     if (!result.up) {
       if (status[data.name].up !== false) {
         status[data.name] = {
@@ -50,17 +56,13 @@ module.exports = {
     } else {
       const wasDown = (status[data.name].up === false);
 
-      if (!wasDown && !config.verbose) {
-        return;
-      }
-
       if (wasDown) {
         logData.downSince = status[data.name].downSince;
+        logData.downFor = moment(logData.downSince).toNow(true);
         delete status[data.name];
         db.put('status', status);
+        tags.push('service-restored');
       }
-
-      tags.push('service-up');
     }
 
     server.log(tags, logData);
