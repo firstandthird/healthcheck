@@ -65,6 +65,8 @@ module.exports = {
       }
     }
 
-    server.log(tags, logData);
+    if (tags.length > 1) {
+      server.log(tags, logData);
+    }
   }
 };
