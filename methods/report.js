@@ -29,6 +29,7 @@ module.exports = {
     const logData = {
       type: data.type,
       name: data.name,
+      url: data.url,
       responseTime: result.responseTime,
       error: result.error,
       retries: data.checkCount || 0
@@ -48,6 +49,7 @@ module.exports = {
         db.put('status', status);
 
         tags.push('service-down');
+        logData.message = `${data.name} is down`;
       } else {
         return;
       }
@@ -57,6 +59,7 @@ module.exports = {
       const wasDown = (status[data.name].up === false);
 
       if (wasDown) {
+        logData.message = `${data.name} is back up`;
         logData.downSince = status[data.name].downSince;
         logData.downFor = moment(logData.downSince).toNow(true);
         delete status[data.name];

@@ -1,10 +1,29 @@
 plugins:
+  hapi-method-loader:
+    _priority: -6
   './lib/healthcheck':
+    _priority: -5
+  hapi-logr:
+    reporters:
+      consoleColor:
+        options:
+          colors:
+            'service-down': 'red'
+            'service-restored': 'green'
+            'service-slow': 'yellow'
+      slack:
+        reporter: 'logr-slack'
+        options:
+          username: 'HealthCheck'
+          hideTags: true
+          tagColors:
+            'service-down': 'danger'
+            'service-restored': 'good'
+            'service-slow': 'warning'
+          filter:
+            - 'service-down'
+            - 'service-restored'
   hapi-method-scheduler:
     schedule: []
-  hapi-slack:
-    tags:
-      - 'service-down'
-      - 'service-restored'
 
 ua: 'healthcheck'
