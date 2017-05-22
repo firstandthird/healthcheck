@@ -1,8 +1,15 @@
 plugins:
   hapi-method-loader:
     _priority: -6
+  vision:
+    _priority: -5
   './lib/healthcheck':
     _priority: -5
+  inert:
+    _priority: -4
+  hapi-auto-handler:
+    _priority: -1
+  hapi-route-loader:
   hapi-logr:
     reporters:
       consoleColor:
