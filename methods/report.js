@@ -20,6 +20,8 @@ module.exports = {
       results[data.name].shift();
     }
 
+    result.error = (result.error) ? result.error.toString() : null;
+
     results[data.name].push(result);
 
     db.put('results', results);
