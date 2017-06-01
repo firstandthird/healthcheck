@@ -23,11 +23,9 @@
   "dependencies": {
     "async": "2.4.0",
     "flat-file-db": "1.0.0",
-    "hapi-auto-handler": "1.4.1",
     "hapi-method-scheduler": "firstandthird/hapi-method-scheduler#d5852f2248a2cbf199c119356b6e22bed1974769",
-    "hapi-nunjucks-helpers": "3.1.1",
     "hapi-views": "5.2.0",
-    "inert": "4.2.0",
+    "inert": "^4.2.0",
     "js-yaml": "3.8.4",
     "lodash.maxby": "4.6.0",
     "lodash.minby": "4.6.0",

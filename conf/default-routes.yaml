@@ -1,12 +1,6 @@
 plugins:
   hapi-views:
     dataPath: '{{CWD}}'
-    enableCache: '{{ENV.ENABLE_CACHE}}'
-    cache:
-      expiresIn: '{{1000 * 60 * 10}}'
-      staleIn: '{{ENV.CACHE_STALE_IN || 60000}}'
-      staleTimeout: 100
-      generateTimeout: 5000
     views:
       '/status':
         view: 'pages/status'

@@ -6,15 +6,18 @@ plugins:
   './lib/healthcheck':
     _priority: -5
   inert:
-    _priority: -4
-  hapi-auto-handler:
-    _priority: -1
   hapi-route-loader:
   hapi-logr:
     reporters:
       consoleColor:
         options:
           colors:
+            'service-down': 'red'
+            'service-restored': 'green'
+            'service-slow': 'yellow'
+      flat:
+        options:
+          tagColors:
             'service-down': 'red'
             'service-restored': 'green'
             'service-slow': 'yellow'
@@ -30,6 +33,7 @@ plugins:
           filter:
             - 'service-down'
             - 'service-restored'
+            - 'start'
   hapi-method-scheduler:
     schedule: []
 

@@ -4,17 +4,3 @@ views:
   path: '{{CWD}}/views'
   defaultExtension: 'njk'
   compileMode: 'async'
-
-assets:
-  path: 'public'
-  dist: '_dist/'
-  endpoint: '/ui'
-
-plugins:
-  hapi-nunjucks-helpers:
-    assets:
-      endpoint: '/ui'
-      dist: '_dist/'
-      cache: true
-      mappingFile: '{{CWD}}/public/_dist/assets.json'
-      cdn: ''
