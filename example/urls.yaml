@@ -4,6 +4,10 @@ verbose: true
 retryDelay: 500
 urls:
   -
+    name: 'certificate'
+    url: 'https://google.com'
+    type: cert
+  -
     name: 'Random'
     url: http://localhost:8080/api/random
     type: http
