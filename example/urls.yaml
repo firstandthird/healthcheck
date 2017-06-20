@@ -4,6 +4,11 @@ verbose: true
 retryDelay: 500
 urls:
   -
+    name: 'certificate'
+    url: 'https://google.com'
+    type: ping
+    interval: 'every 24 hours'
+  -
     name: 'Random'
     url: http://localhost:8080/api/random
     type: http
