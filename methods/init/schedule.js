@@ -4,6 +4,17 @@ module.exports = {
     const scheduler = server.settings.app.plugins['hapi-method-scheduler'].schedule;
 
     config.urls.forEach(url => {
+      // each https url warns if SSL certificate expires in next 7 days
+      if (url.url.startsWith('https://')) {
+        const sslData = {
+          method: 'network.cert',
+          time: 'every 24 hours',
+          params: [{
+            url: url.url
+          }]
+        };
+        scheduler.push(sslData);
+      }
       const data = {
         method: 'checkurl',
         time: url.interval || config.interval || 'every 5 minutes',
