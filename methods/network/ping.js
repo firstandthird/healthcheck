@@ -5,8 +5,7 @@ module.exports = {
     const server = this;
 
     ping.promise.probe(data.url, {
-      timeout: data.timeout / 1000,
-      extra: ['-c 1']
+      timeout: data.timeout / 1000
     }).then(res => {
       const result = {
         timestamp: Date.now(),

@@ -4,6 +4,7 @@ plugins:
   hapi-method-scheduler:
     _priority: -6
     timezone: 'America/Los_Angeles'
+    noParamsLength: true
     schedule: []
   vision:
     _priority: -5
