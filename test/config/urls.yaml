@@ -8,14 +8,14 @@ urls:
     url: 'https://google.com'
     type: cert
     interval: 'every 2 seconds'
-  -
-    name: 'http'
-    url: http://localhost:8080/api/random
-    type: http
-    interval: 'every 2 seconds'
-  -
-    name: 'ping'
-    url: http://localhost:8080/test/ping
-    type: ping
-    interval: 'every 2 seconds'
-    responseThreshold: 30
+  # -
+  #   name: 'http'
+  #   url: http://localhost:8080/test/ping
+  #   type: http
+  #   interval: 'every 2 seconds'
+  # -
+  #   name: 'ping'
+  #   url: http://localhost:8080/test/ping
+  #   type: ping
+  #   interval: 'every 2 seconds'
+  #   responseThreshold: 30

@@ -1,5 +1,5 @@
 module.exports = {
-  method(data) {
+  method(data, done) {
     const server = this;
     switch (data.type) {
       case 'ping':
@@ -12,5 +12,6 @@ module.exports = {
         server.methods.network.cert(data);
         break;
     }
+    done();
   }
 };

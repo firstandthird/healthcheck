@@ -1,9 +1,11 @@
-const tap = require('tap');
+const code = require('code');   // assertion library
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 const async = require('async');
 const Rapptor = require('rapptor');
 
 let server;
-tap.beforeEach((allDone) => {
+lab.beforeEach((allDone) => {
   async.autoInject({
     rapptor(done) {
       const rapptor = new Rapptor();
@@ -16,34 +18,27 @@ tap.beforeEach((allDone) => {
   }, allDone);
 });
 
-tap.afterEach((done) => {
+lab.afterEach((done) => {
   // stop the method shceudler
   server.stop(() => {
     done();
   });
 });
 
-tap.test('url ping', (t) => {
+lab.test('url ping', { timeout: 6000 }, (done) => {
   let called = false;
   server.route({
     method: 'get',
     path: '/test/ping',
     handler(request, reply) {
-      console.log('??????')
-      console.log('??????')
-      console.log('??????')
-      console.log('??????')
       reply({ statusCode: 200, headers: request.headers }).code(200);
     }
-  })
+  });
   server.methods.report = (data, result) => {
-    if (data.name === 'ping' && !called) {
+    if (data.name === 'http' && !called) {
       called = true;
-      console.log(data)
-      console.log(result)
-      console.log(server.methods.methodScheduler)
-      // t.equal(result.up, true, 'pings the destination address');
-      t.end();
+      code.expect(result.up).to.equal(true);
+      return done();
     }
   };
 });
