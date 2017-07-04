@@ -23,7 +23,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "flat-file-db": "1.0.0",
-    "hapi-method-scheduler": "2.0.0",
+    "hapi-method-scheduler": "2.2.0",
     "hapi-views": "^5.2.0",
     "inert": "^4.2.0",
     "js-yaml": "^3.8.4",
