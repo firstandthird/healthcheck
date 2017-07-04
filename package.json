@@ -7,7 +7,7 @@
     "dev": "npm install && npm prune && nodemon -x npm run example",
     "example": "rapptor --config example/urls.yaml --log example/log.json",
     "exampleurl": "rapptor --configUrl https://gist.githubusercontent.com/dawnerd/ea2a0bf8db74544395cbf77dba799350/raw/f60f0cf33978885ea6808f457c896dc8658b7d7e/healthcheck-test.yaml --log example/log.json",
-    "test": "tap test/test.*",
+    "test": "tap test",
     "lint": "eslint ."
   },
   "repository": {
@@ -40,13 +40,10 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "code": "^4.1.0",
     "eslint": "3.19.0",
     "eslint-config-firstandthird": "3.3.0",
     "eslint-plugin-import": "2.2.0",
-    "lab": "^14.1.0",
-    "nodemon": "1.11.0",
-    "tap": "^10.7.0"
+    "nodemon": "1.11.0"
   },
   "eslintConfig": {
     "env": {

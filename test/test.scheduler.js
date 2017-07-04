@@ -1,11 +1,9 @@
-const code = require('code');   // assertion library
-const Lab = require('lab');
-const lab = exports.lab = Lab.script();
+const tap = require('tap');
 const async = require('async');
 const Rapptor = require('rapptor');
 
 let server;
-lab.beforeEach((allDone) => {
+tap.beforeEach((allDone) => {
   async.autoInject({
     rapptor(done) {
       const rapptor = new Rapptor();
@@ -25,30 +23,34 @@ lab.beforeEach((allDone) => {
   }, allDone);
 });
 
-lab.afterEach((done) => {
+tap.afterEach((done) => {
   server.stop(() => {
     done();
   });
 });
 
-lab.test('schedules network http', { timeout: 6000 }, (done) => {
+tap.test('schedules network http', { timeout: 6000 }, (t) => {
   let called = false;
   server.methods.report = (data, result) => {
     if (data.name === 'http1' && !called) {
       called = true;
-      code.expect(result.up).to.equal(true);
-      return done();
+      server.methods.methodScheduler.stopSchedule('http1');
+      server.methods.methodScheduler.stopSchedule('ping1');
+      t.equal(result.up, true);
+      t.end();
     }
   };
 });
 
-lab.test('schedules network ping', { timeout: 6000 }, (done) => {
+tap.test('schedules network ping', { timeout: 6000 }, (t) => {
   let called = false;
   server.methods.report = (data, result) => {
     if (data.name === 'ping1' && !called) {
       called = true;
-      code.expect(result.up).to.equal(true);
-      return done();
+      t.equal(result.up, true);
+      server.methods.methodScheduler.stopSchedule('http1');
+      server.methods.methodScheduler.stopSchedule('ping1');
+      t.end();
     }
   };
 });
