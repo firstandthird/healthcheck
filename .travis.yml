@@ -1,6 +1,5 @@
 env:
-  - LOG_PATH="test/config/json.log"
-  - CONFIG_PATH="test/config/urls.yaml"
+  - LOG_PATH="test/config/json.log" CONFIG_PATH="test/config/urls.yaml"
 language: node_js
 node_js:
   - "8"
