@@ -23,7 +23,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "flat-file-db": "1.0.0",
-    "hapi-method-scheduler": "github:firstandthird/hapi-method-scheduler#d5852f2248a2cbf199c119356b6e22bed1974769",
+    "hapi-method-scheduler": "2.0.0",
     "hapi-views": "^5.2.0",
     "inert": "^4.2.0",
     "js-yaml": "^3.8.4",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "eslint-config-firstandthird": "3.3.0",
     "eslint-plugin-import": "2.2.0",
-    "eslint": "3.19.0"
+    "eslint": "3.19.0",
     "nodemon": "1.11.0",
     "tap": "^10.7.0"
   },

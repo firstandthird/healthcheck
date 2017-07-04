@@ -1,10 +1,14 @@
 plugins:
   hapi-method-loader:
+    _priority: -7
+  hapi-method-scheduler:
     _priority: -6
+    timezone: 'America/Los_Angeles'
+    schedule: []
   vision:
     _priority: -5
   './lib/healthcheck':
-    _priority: -5
+    _priority: -4
   inert:
   hapi-route-loader:
   hapi-logr:
@@ -34,7 +38,5 @@ plugins:
             - 'service-down'
             - 'service-restored'
             - 'start'
-  hapi-method-scheduler:
-    schedule: []
 
 ua: 'healthcheck'
