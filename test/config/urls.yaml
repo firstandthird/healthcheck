@@ -8,9 +8,9 @@ urls:
     url: http://localhost:8080/test/http
     type: http
     interval: 'every 2 seconds'
-  -
-    name: 'ping1'
-    url: 'github.com'
-    type: ping
-    interval: 'every 2 seconds'
-    responseThreshold: 30
+  # -
+  #   name: 'ping1'
+  #   url: 'github.com'
+  #   type: ping
+  #   interval: 'every 2 seconds'
+  #   responseThreshold: 30
