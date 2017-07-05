@@ -43,6 +43,7 @@
     "eslint": "3.19.0",
     "eslint-config-firstandthird": "3.3.0",
     "eslint-plugin-import": "2.2.0",
+    "hapi": "^16.4.3",
     "nodemon": "1.11.0",
     "tap": "^10.7.0"
   },
