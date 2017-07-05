@@ -52,8 +52,6 @@ module.exports = {
 
         tags.push('service-down');
         logData.message = `${data.name} is down`;
-      } else {
-        return;
       }
     } else if (result.slow) {
       tags.push('service-slow');
