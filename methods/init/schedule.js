@@ -2,7 +2,11 @@ module.exports = {
   method(config, done) {
     const server = this;
     const scheduler = server.methods.methodScheduler.startSchedule;
-
+    // if no schedules were specified in config then move on:
+    if (!config.urls) {
+      return done();
+    }
+    // register any schedules that were specified at start-up:
     config.urls.forEach(url => {
       // each https url warns if SSL certificate expires in next 7 days
       if (url.url.startsWith('https://')) {

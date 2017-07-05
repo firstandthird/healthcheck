@@ -1,0 +1,5 @@
+maxEntries: 100
+interval: 'every 10 seconds'
+verbose: true
+retryDelay: 500
+urls:
