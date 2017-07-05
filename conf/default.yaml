@@ -1,3 +1,6 @@
+maxEntries: 100
+interval: 'every 10 seconds'
+retryDelay: 500
 plugins:
   hapi-method-loader:
     _priority: -7
@@ -9,6 +12,9 @@ plugins:
   vision:
     _priority: -5
   './lib/healthcheck':
+    _priority: -4
+  './lib/db':
+    logPath: '{{ ENV.LOG_PATH }}'
     _priority: -4
   inert:
   hapi-route-loader:

@@ -1,0 +1,6 @@
+urls:
+  -
+    name: 'http1'
+    url: http://localhost:8080/test/http
+    type: http
+    interval: 'every 2 seconds'

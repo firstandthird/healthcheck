@@ -4,7 +4,7 @@ module.exports = {
   method(data) {
     const server = this;
     const start = Date.now();
-    const config = server.plugins.healthcheck.config;
+    const config = server.settings.app;
     Wreck.get(data.url, {
       timeout: data.timeout,
       headers: config.headers
