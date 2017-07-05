@@ -1,6 +1,7 @@
 maxEntries: 100
 interval: 'every 10 seconds'
 retryDelay: 500
+verbose: false
 plugins:
   hapi-method-loader:
     _priority: -7
@@ -20,12 +21,6 @@ plugins:
   hapi-route-loader:
   hapi-logr:
     reporters:
-      consoleColor:
-        options:
-          colors:
-            'service-down': 'red'
-            'service-restored': 'green'
-            'service-slow': 'yellow'
       flat:
         options:
           tagColors:
