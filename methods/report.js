@@ -69,9 +69,7 @@ module.exports = {
         tags.push('service-restored');
       }
     }
-
-    if (tags.length > 1) {
-      server.log(tags, logData);
-    }
+    // always log, logging can be throttled in reporter config:
+    server.log(tags, logData);
   }
 };
