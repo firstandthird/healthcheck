@@ -69,9 +69,7 @@ module.exports = {
         tags.push('service-restored');
       }
     }
-
-    if (tags.length > 1) {
-      server.log(tags, logData);
-    }
+    // always log, logr can be customized in config to throttle output:
+    server.log(tags, logData);
   }
 };
