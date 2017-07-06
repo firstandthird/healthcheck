@@ -33,7 +33,7 @@
     "logr-slack": "1.1.0",
     "moment": "^2.18.1",
     "ping": "0.2.2",
-    "rapptor": "^1.16.0",
+    "rapptor": "^1.17.0",
     "vision": "^4.1.1",
     "vision-nunjucks": "^2.1.0",
     "wreck": "^12.2.2",
