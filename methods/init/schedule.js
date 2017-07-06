@@ -21,6 +21,10 @@ module.exports = {
       }
       const name = url.name || url.url;
       const time = url.interval || config.interval || 'every 5 minutes';
+      // status codes will be returned as number so convert it if it is a string:
+      if (typeof url.statusCode === 'string') {
+        url.statusCode = parseInt(url.statusCode, 10);
+      }
       const data = {
         label: url.name,
         method: 'checkurl',
