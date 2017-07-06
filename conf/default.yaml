@@ -3,6 +3,8 @@ interval: 'every 10 seconds'
 retryDelay: 1000
 verbose: false
 ua: 'healthcheck'
+slack:
+  slackHook: ''
 plugins:
   hapi-method-loader:
     _priority: -7
@@ -31,6 +33,7 @@ plugins:
       slack:
         reporter: 'logr-slack'
         options:
+          enabled: '{{(slack.slackHook) ? true : false}}'
           throttle: 1000 * 60
           throttleBasedOnTags: true
           username: 'HealthCheck'

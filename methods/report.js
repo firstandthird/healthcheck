@@ -26,7 +26,7 @@ module.exports = {
 
     db.put('results', results);
 
-    const tags = ['healthcheck'];
+    const tags = ['service-check'];
 
     const logData = {
       type: data.type,
@@ -37,10 +37,6 @@ module.exports = {
       retries: data.checkCount || 0
     };
 
-    if (config.verbose) {
-      tags.push('service-check');
-    }
-
     if (!result.up) {
       if (status[data.name].up !== false) {
         status[data.name] = {
@@ -50,9 +46,9 @@ module.exports = {
 
         db.put('status', status);
 
-        tags.push('service-down');
-        logData.message = `${data.name} is down`;
       }
+      tags.push('service-down');
+      logData.message = `${data.name} is down`;
     } else if (result.slow) {
       tags.push('service-slow');
     } else {
@@ -67,7 +63,8 @@ module.exports = {
         tags.push('service-restored');
       }
     }
-    // always log, logging can be throttled in reporter config:
-    server.log(tags, logData);
+    if (tags.length > 1 || config.verbose) {
+      server.log(tags, logData);
+    }
   }
 };
