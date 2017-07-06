@@ -52,8 +52,6 @@ module.exports = {
 
         tags.push('service-down');
         logData.message = `${data.name} is down`;
-      } else {
-        return;
       }
     } else if (result.slow) {
       tags.push('service-slow');
@@ -69,9 +67,7 @@ module.exports = {
         tags.push('service-restored');
       }
     }
-
-    if (tags.length > 1) {
-      server.log(tags, logData);
-    }
+    // always log, logging can be throttled in reporter config:
+    server.log(tags, logData);
   }
 };
