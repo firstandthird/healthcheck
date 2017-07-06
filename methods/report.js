@@ -3,8 +3,8 @@ const moment = require('moment');
 module.exports = {
   method(data, result) {
     const server = this;
-    const db = server.plugins.healthcheck.db;
-    const config = server.plugins.healthcheck.config;
+    const db = server.plugins.db.db;
+    const config = server.settings.app;
     const results = db.get('results') || {};
     const status = db.get('status') || {};
 

@@ -7,7 +7,7 @@
     "dev": "npm install && npm prune && nodemon -x npm run example",
     "example": "rapptor --config example/urls.yaml --log example/log.json",
     "exampleurl": "rapptor --configUrl https://gist.githubusercontent.com/dawnerd/ea2a0bf8db74544395cbf77dba799350/raw/f60f0cf33978885ea6808f457c896dc8658b7d7e/healthcheck-test.yaml --log example/log.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tap test/test.*",
     "lint": "eslint ."
   },
   "repository": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "flat-file-db": "1.0.0",
-    "hapi-method-scheduler": "github:firstandthird/hapi-method-scheduler#d5852f2248a2cbf199c119356b6e22bed1974769",
+    "hapi-method-scheduler": "2.2.0",
     "hapi-views": "^5.2.0",
     "inert": "^4.2.0",
     "js-yaml": "^3.8.4",
@@ -40,10 +40,12 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "nodemon": "1.11.0",
+    "eslint": "3.19.0",
     "eslint-config-firstandthird": "3.3.0",
     "eslint-plugin-import": "2.2.0",
-    "eslint": "3.19.0"
+    "hapi": "^16.4.3",
+    "nodemon": "1.11.0",
+    "tap": "^10.7.0"
   },
   "eslintConfig": {
     "env": {

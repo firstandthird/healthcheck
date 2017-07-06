@@ -1,20 +1,26 @@
+maxEntries: 100
+interval: 'every 10 seconds'
+retryDelay: 500
+verbose: false
 plugins:
   hapi-method-loader:
+    _priority: -7
+  hapi-method-scheduler:
     _priority: -6
+    timezone: 'America/Los_Angeles'
+    noParamsLength: true
+    schedule: []
   vision:
     _priority: -5
   './lib/healthcheck':
-    _priority: -5
+    _priority: -4
+  './lib/db':
+    logPath: '{{ ENV.LOG_PATH }}'
+    _priority: -4
   inert:
   hapi-route-loader:
   hapi-logr:
     reporters:
-      consoleColor:
-        options:
-          colors:
-            'service-down': 'red'
-            'service-restored': 'green'
-            'service-slow': 'yellow'
       flat:
         options:
           tagColors:
@@ -36,7 +42,5 @@ plugins:
             - 'service-down'
             - 'service-restored'
             - 'start'
-  hapi-method-scheduler:
-    schedule: []
 
 ua: 'healthcheck'

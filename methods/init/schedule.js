@@ -1,21 +1,27 @@
 module.exports = {
   method(config, done) {
     const server = this;
-    const scheduler = server.settings.app.plugins['hapi-method-scheduler'].schedule;
-
+    const scheduler = server.methods.methodScheduler.startSchedule;
+    // if no schedules were specified in config then move on:
+    if (!config.urls) {
+      return done();
+    }
+    // register any schedules that were specified at start-up:
     config.urls.forEach(url => {
       // each https url warns if SSL certificate expires in next 7 days
       if (url.url.startsWith('https://')) {
-        const sslData = {
+        scheduler({
           method: 'network.cert',
           time: 'every 24 hours',
           params: [{
             url: url.url
           }]
-        };
-        scheduler.push(sslData);
+        });
       }
+      const name = url.name || url.url;
+      const time = url.interval || config.interval || 'every 5 minutes';
       const data = {
+        label: url.name,
         method: 'checkurl',
         time: url.interval || config.interval || 'every 5 minutes',
         params: [{
@@ -30,14 +36,13 @@ module.exports = {
           checkCount: 0
         }]
       };
-      scheduler.push(data);
+      scheduler(data);
       server.log(['healthcheck', 'register'], {
-        name: data.params[0].name,
-        url: data.params[0].url,
-        interval: data.time
+        name,
+        url: url.url,
+        interval: time
       });
     });
-
     done();
   }
 };

@@ -4,8 +4,7 @@ module.exports = {
   method(data) {
     const server = this;
     const start = Date.now();
-    const config = server.plugins.healthcheck.config;
-
+    const config = server.settings.app;
     Wreck.get(data.url, {
       timeout: data.timeout,
       headers: config.headers
@@ -23,7 +22,6 @@ module.exports = {
         up: false,
         slow: false
       };
-
       if (err) {
         result.error = err;
       } else if (res.statusCode === data.statusCode) {
@@ -32,7 +30,6 @@ module.exports = {
         result.up = false;
         result.error = `Status code: ${res.statusCode}`;
       }
-
       if (result.up && data.containsText && responseText.indexOf(data.containsText) === -1) {
         result.up = false;
         result.error = 'Text not found';

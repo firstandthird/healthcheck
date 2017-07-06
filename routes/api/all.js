@@ -7,7 +7,7 @@ exports.all = {
   path: '/api/all',
   handler(request, reply) {
     const server = request.server;
-    const db = server.plugins.healthcheck.db;
+    const db = server.plugins.db;
     const results = db.get('results') || {};
     const output = {};
 
@@ -21,7 +21,7 @@ exports.all = {
         minResponse,
         maxResponse,
         results: results[result]
-      }
+      };
     });
 
     reply(output);
