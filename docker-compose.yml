@@ -7,3 +7,4 @@ app:
     PORT: 8080
     VIRTUAL_HOST: 'healthcheck.*'
     FORCE_COLOR: 1
+    RAPPTOR_CONFIG_URL:

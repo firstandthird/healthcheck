@@ -1,7 +1,8 @@
 maxEntries: 100
 interval: 'every 10 seconds'
-retryDelay: 500
+retryDelay: 1000
 verbose: false
+ua: 'healthcheck'
 plugins:
   hapi-method-loader:
     _priority: -7
@@ -34,6 +35,7 @@ plugins:
           throttleBasedOnTags: true
           username: 'HealthCheck'
           hideTags: true
+          slackHook: '{{slack.slackHook}}'
           tagColors:
             'service-down': 'danger'
             'service-restored': 'good'
@@ -43,4 +45,3 @@ plugins:
             - 'service-restored'
             - 'start'
 
-ua: 'healthcheck'
