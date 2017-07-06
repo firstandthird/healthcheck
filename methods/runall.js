@@ -1,7 +1,7 @@
 module.exports = {
   method() {
     const server = this;
-    const config = server.plugins.healthcheck.config;
+    const config = server.settings.app;
 
     config.urls.forEach(url => {
       const data = {

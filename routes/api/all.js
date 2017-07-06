@@ -7,7 +7,7 @@ exports.all = {
   path: '/api/all',
   handler(request, reply) {
     const server = request.server;
-    const db = server.plugins.db;
+    const db = server.plugins.db.db;
     const results = db.get('results') || {};
     const output = {};
 

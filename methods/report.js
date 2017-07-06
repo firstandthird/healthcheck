@@ -26,7 +26,7 @@ module.exports = {
 
     db.put('results', results);
 
-    const tags = ['service-check'];
+    const tags = ['service-check', data.name];
 
     const logData = {
       type: data.type,
@@ -45,7 +45,6 @@ module.exports = {
         };
 
         db.put('status', status);
-
       }
       tags.push('service-down');
       logData.message = `${data.name} is down`;
@@ -63,7 +62,7 @@ module.exports = {
         tags.push('service-restored');
       }
     }
-    if (tags.length > 1 || config.verbose) {
+    if (tags.length > 2 || config.verbose) {
       server.log(tags, logData);
     }
   }

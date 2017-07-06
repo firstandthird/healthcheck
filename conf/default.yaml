@@ -24,17 +24,23 @@ plugins:
   hapi-route-loader:
   hapi-logr:
     reporters:
+      consoleColor:
+        options:
+          colors:
+            'service-down': 'bgRed'
+            'service-restored': 'bgGreen'
+            'service-slow': 'bgYellow'
       flat:
         options:
           tagColors:
-            'service-down': 'red'
-            'service-restored': 'green'
-            'service-slow': 'yellow'
+            'service-down': 'bgRed'
+            'service-restored': 'bgGreen'
+            'service-slow': 'bgYellow'
       slack:
         reporter: 'logr-slack'
         options:
           enabled: '{{(slack.slackHook) ? true : false}}'
-          throttle: 1000 * 60
+          throttle: '{{1000 * 60 * 10}}'
           throttleBasedOnTags: true
           username: 'HealthCheck'
           hideTags: true

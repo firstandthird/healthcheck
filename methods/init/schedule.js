@@ -37,7 +37,7 @@ module.exports = {
         }]
       };
       scheduler(data);
-      server.log(['healthcheck', 'register'], {
+      server.log(['register'], {
         name,
         url: url.url,
         interval: time
