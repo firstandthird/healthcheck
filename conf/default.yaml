@@ -52,5 +52,5 @@ plugins:
           filter:
             - 'service-down'
             - 'service-restored'
-            - 'start'
+            - 'notice'
 
