@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>Status</title>
+  <style>
+  .up {
+    color: green;
+  }
+
+  .down {
+    color: red;
+  }
+
+  .slow {
+    color: yellow;
+  }
+  </style>
+</head>
+<body>
+  <a href="/api/runall">Recheck</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name, service in status %}
+        {% set stat = service.results | last %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>
+            {% if not stat.up %}
+            <span class="down">DOWN</span>
+            {% else %}
+            <span class="up">UP</span>
+            {% endif %}
+
+            {% if stat.slow %}
+            <span class="slow">SLOW</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,6 @@
+views:
+  engines:
+    njk: 'vision-nunjucks'
+  path: '{{CWD}}/views'
+  defaultExtension: 'njk'
+  compileMode: 'async'

@@ -20,6 +20,8 @@ module.exports = {
       results[data.name].shift();
     }
 
+    result.error = (result.error) ? result.error.toString() : null;
+
     results[data.name].push(result);
 
     db.put('results', results);
@@ -50,8 +52,6 @@ module.exports = {
 
         tags.push('service-down');
         logData.message = `${data.name} is down`;
-      } else {
-        return;
       }
     } else if (result.slow) {
       tags.push('service-slow');
@@ -67,9 +67,7 @@ module.exports = {
         tags.push('service-restored');
       }
     }
-
-    if (tags.length > 1) {
-      server.log(tags, logData);
-    }
+    // always log, logging can be throttled in reporter config:
+    server.log(tags, logData);
   }
 };

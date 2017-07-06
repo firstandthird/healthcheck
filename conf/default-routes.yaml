@@ -1,0 +1,10 @@
+plugins:
+  hapi-views:
+    dataPath: '{{CWD}}'
+    views:
+      '/status':
+        view: 'pages/status'
+        inject:
+          status: '/api/all'
+        data:
+          status: '{inject.status}'
