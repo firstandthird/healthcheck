@@ -23,7 +23,12 @@ module.exports = {
         slow: false
       };
       if (err) {
-        result.error = err;
+        // see if it was an error we were expecting anyway:
+        if (err.output && err.output.statusCode === data.statusCode) {
+          result.up = true;
+        } else {
+          result.error = err;
+        }
       } else if (res.statusCode === data.statusCode) {
         result.up = true;
       } else {
