@@ -11,6 +11,7 @@ module.exports = {
       // each https url warns if SSL certificate expires in next 7 days
       if (url.url.startsWith('https://')) {
         scheduler({
+          label: `${url.name}.network.cert`,
           method: 'network.cert',
           time: 'every 24 hours',
           params: [{
