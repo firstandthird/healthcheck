@@ -21,7 +21,6 @@ module.exports = {
     }
 
     result.error = (result.error) ? result.error.toString() : null;
-
     results[data.name].push(result);
 
     db.put('results', results);
@@ -54,9 +53,9 @@ module.exports = {
       const wasDown = (status[data.name].up === false);
 
       if (wasDown) {
-        logData.message = `${data.name} is back up`;
         logData.downSince = status[data.name].downSince;
         logData.downFor = moment(logData.downSince).toNow(true);
+        logData.message = `${data.name} is back up after ${logData.downFor}`;
         delete status[data.name];
         db.put('status', status);
         tags.push('service-restored');
