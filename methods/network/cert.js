@@ -3,13 +3,14 @@
 const https = require('https');
 module.exports = {
   method(data) {
+    // set the type:
+    data.type = 'certification';
     const server = this;
     https.get(data.url, (res) => {
       try {
         const certInfo = res.socket.getPeerCertificate();
         const expiresIn = new Date(certInfo.valid_to).getTime() - new Date().getTime();
-        const oneWeek = 1000 * 60 * 60 * 24 * 7;
-        if (expiresIn < oneWeek) {
+        if (expiresIn < data.expireLimit) {
           server.methods.report(data, {
             timestamp: Date.now(),
             expiresIn

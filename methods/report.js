@@ -35,7 +35,9 @@ module.exports = {
       error: result.error,
       retries: data.checkCount || 0
     };
-
+    if (data.type === 'certification') {
+      tags.push('certificate-expiration');
+    }
     if (!result.up) {
       if (status[data.name].up !== false) {
         status[data.name] = {
@@ -45,8 +47,14 @@ module.exports = {
 
         db.put('status', status);
       }
-      tags.push('service-down');
-      logData.message = `${data.name} is down`;
+      if (data.type !== 'certification') {
+        tags.push('service-down');
+      }
+      if (data.type === 'certification') {
+        logData.message = `The SSL certificate for ${data.url} expires in ${(result.expiresIn / (1000 * 60 * 60 * 24)).toFixed(2)} days `;
+      } else {
+        logData.message = `${data.name} is down`;
+      }
     } else if (result.slow) {
       tags.push('service-slow');
     } else {

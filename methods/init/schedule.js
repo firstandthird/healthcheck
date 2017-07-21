@@ -13,9 +13,13 @@ module.exports = {
         scheduler({
           label: `${url.name}.network.cert`,
           method: 'network.cert',
-          time: 'every 24 hours',
+          // can specify how often to check, default is 24 hours:
+          time: url.interval || 'every 24 hours',
           params: [{
-            url: url.url
+            name: `${url.name || url.url}.network.cert`,
+            url: url.url,
+            // can specify how close to expiration to consider a 'warning' range:
+            expireLimit: url.expireLimit ? url.expireLimit : 1000 * 60 * 60 * 24 * 7,
           }]
         });
       }
