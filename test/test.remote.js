@@ -318,10 +318,11 @@ tap.test('can handle cert warnings', (t) => {
     },
     // wait for it to make calls and log things:
     wait(report, done) {
-      setTimeout(done, 4000);
+      setTimeout(done, 5000);
     },
-    cleanup(report, done) {
+    cleanup(report, wait, done) {
       server.methods.methodScheduler.stopSchedule('HTTPS Test.network.cert');
+      server.methods.methodScheduler.stopSchedule('HTTPS Test');
       server.stop(done);
     },
     cleanConfig(cleanup, configServer, done) {
