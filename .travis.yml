@@ -1,5 +1,5 @@
 env:
-  - LOG_PATH="test/log.json"
+  - LOG_PATH="test/log.json" HEALTHCHECK_TEST_URL=https://github.com
 language: node_js
 node_js:
   - "8"
