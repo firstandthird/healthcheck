@@ -25,6 +25,7 @@ plugins:
   hapi-logr:
     reporters:
       sns:
+        reporter: 'logr-sns'
         options:
           enabled: '{{(ENV.SNS_TOPIC) ? true : false}}'
           clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
