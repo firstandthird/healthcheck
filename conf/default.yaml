@@ -60,3 +60,4 @@ plugins:
             - 'service-down'
             - 'service-restored'
             - 'notice'
+            - 'certificate-expiration'
