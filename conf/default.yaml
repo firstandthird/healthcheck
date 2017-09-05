@@ -24,6 +24,12 @@ plugins:
   hapi-route-loader:
   hapi-logr:
     reporters:
+      sns:
+        options:
+          enabled: '{{(ENV.SNS_TOPIC) ? true : false}}'
+          clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
+          secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
+          topic: '{{ ENV.SNS_TOPIC }}'
       consoleColor:
         options:
           colors:
@@ -53,4 +59,3 @@ plugins:
             - 'service-down'
             - 'service-restored'
             - 'notice'
-
