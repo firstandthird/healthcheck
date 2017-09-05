@@ -13,8 +13,7 @@ module.exports = {
         scheduler({
           label: `${url.name}.network.cert`,
           method: 'network.cert',
-          // can specify how often to check, default is 24 hours:
-          time: url.interval || 'every 24 hours',
+          time: 'every 24 hours',
           params: [{
             name: `${url.name || url.url}.network.cert`,
             url: url.url,
