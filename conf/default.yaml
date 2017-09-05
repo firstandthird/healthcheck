@@ -31,6 +31,10 @@ plugins:
           clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
           secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
           topic: '{{ ENV.SNS_TOPIC }}'
+          filter:
+            - 'service-down'
+            - 'service-restored'
+            - 'certificate-expiration'
       consoleColor:
         options:
           colors:
