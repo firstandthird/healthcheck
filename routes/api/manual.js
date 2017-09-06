@@ -1,5 +1,5 @@
-const https = require('https');
 const async = require('async');
+
 exports.manual = {
   method: 'GET',
   path: '/api/cert',
@@ -12,7 +12,7 @@ exports.manual = {
       if (!url.startsWith('https:')) {
         return eachDone();
       }
-      server.methods.getFreshCertificate(url.replace('https://', ''), (err, res) => {
+      server.methods.getFreshCertificate(url, (err, res) => {
         if (err) {
           expirations[url] = err;
           return eachDone();

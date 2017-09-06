@@ -2,8 +2,9 @@ const https = require('https');
 
 module.exports = {
   method(url, done) {
+    const requestUrl = url.startsWith('https://') ? url.replace('https://', '') : url;
     const options = {
-      hostname: url,
+      hostname: requestUrl,
       port: 443,
       method: 'GET',
       headers: {
