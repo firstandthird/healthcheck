@@ -4,22 +4,21 @@ exports.manual = {
   method: 'GET',
   path: '/api/cert',
   handler(request, reply) {
-    const config = request.server.settings.app;
+    const server = request.server;
+    const config = server.settings.app;
     const expirations = {};
     async.each(config.urls, (obj, eachDone) => {
       const url = obj.url;
       if (!url.startsWith('https:')) {
         return eachDone();
       }
-      https.get(url, (res) => {
-        const certInfo = res.socket.getPeerCertificate();
-        const expiresIn = new Date(certInfo.valid_to).getTime() - new Date().getTime();
+      server.methods.getFreshCertificate(url.replace('https://', ''), (err, res) => {
+        if (err) {
+          expirations[url] = err;
+          return eachDone();
+        }
         const day = 24 * 60 * 60 * 1000;
-        const expirationDate = new Date(certInfo.valid_to);
-        expirations[url] = `Expires in ${(expiresIn / day).toFixed(1)} days on ${expirationDate}`;
-        eachDone();
-      }).on('error', (error) => {
-        expirations[url] = error.toString();
+        expirations[url] = `Expires in ${(res.expiresIn / day).toFixed(1)} days on ${res.expiresOn}`;
         eachDone();
       });
     }, (err) => {
