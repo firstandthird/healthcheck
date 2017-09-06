@@ -16,7 +16,7 @@ exports.manual = {
         const expiresIn = new Date(certInfo.valid_to).getTime() - new Date().getTime();
         const day = 24 * 60 * 60 * 1000;
         const expirationDate = new Date(certInfo.valid_to);
-        expirations[url] = `Expires in ${(expiresIn / day)} days on ${expirationDate}`;
+        expirations[url] = `Expires in ${(expiresIn / day).toFixed(1)} days on ${expirationDate}`;
         eachDone();
       }).on('error', (error) => {
         expirations[url] = error.toString();
