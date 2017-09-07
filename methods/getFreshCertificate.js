@@ -1,8 +1,8 @@
 const https = require('https');
-
 module.exports = {
   method(url, done) {
-    const requestUrl = url.startsWith('https://') ? url.replace('https://', '') : url;
+    let requestUrl = url.startsWith('https://') ? url.replace('https://', '') : url;
+    requestUrl = requestUrl.split('/')[0];
     const options = {
       hostname: requestUrl,
       port: 443,
