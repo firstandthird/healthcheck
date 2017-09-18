@@ -5,6 +5,11 @@ verbose: false
 ua: 'healthcheck'
 slack:
   slackHook: ''
+sns:
+  enabled: '{{(ENV.SNS_TOPIC) ? true : false}}'
+  clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
+  secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
+  topic: '{{ ENV.SNS_TOPIC }}'
 plugins:
   hapi-method-loader:
     _priority: -7
@@ -27,12 +32,12 @@ plugins:
       sns:
         reporter: 'logr-sns'
         options:
-          enabled: '{{(ENV.SNS_TOPIC) ? true : false}}'
+          enabled: '{{ sns.enabled }}'
+          clientId: '{{ sns.clientId }}'
+          secretId: '{{ sns.secretId }}'
+          topic: '{{ sns.topic }}'
           throttle: '{{1000 * 60 * 10}}'
           throttleBasedOnTags: true
-          clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
-          secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
-          topic: '{{ ENV.SNS_TOPIC }}'
           filter:
             - 'service-down'
             - 'service-restored'
