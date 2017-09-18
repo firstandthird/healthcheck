@@ -31,7 +31,7 @@
     "lodash.minby": "4.6.0",
     "lodash.sumby": "4.6.0",
     "logr-slack": "1.1.0",
-    "logr-sns": "^1.1.0",
+    "logr-sns": "^1.2.0",
     "moment": "^2.18.1",
     "ping": "0.2.2",
     "rapptor": "^2.4.1",
