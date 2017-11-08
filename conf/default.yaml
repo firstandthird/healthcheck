@@ -5,12 +5,17 @@ verbose: false
 ua: 'healthcheck'
 slack:
   slackHook: ''
+  slackCommandToken: '{{ENV.SLACK_TOKEN || false}}'
 sns:
   enabled: '{{(ENV.SNS_TOPIC) ? true : false}}'
   clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
   secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
   topic: '{{ ENV.SNS_TOPIC }}'
 plugins:
+  slack-command:
+    routeToListen: '/api/command'
+    token: '{{slack.slackCommandToken}}'
+  './lib/slack':
   hapi-method-loader:
     _priority: -7
   hapi-method-scheduler:
