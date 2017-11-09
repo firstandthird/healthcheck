@@ -13,6 +13,7 @@ sns:
   topic: '{{ ENV.SNS_TOPIC }}'
 plugins:
   slack-command:
+    _enabled: '{{(slack.slackCommandToken) ? true : false}}'
     routeToListen: '/api/command'
     token: '{{slack.slackCommandToken}}'
   './lib/slack':
