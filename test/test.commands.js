@@ -17,6 +17,7 @@ tap.beforeEach((allDone) => {
 });
 
 tap.afterEach((done) => {
+  server.methods.methodScheduler.stopSchedule('http1');
   server.stop(() => {
     done();
   });
@@ -50,27 +51,49 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
       text: 'check'
     }
   }, (response) => {
-    console.log(response.statusCode)
+    t.equal(response.result.success, true);
     t.end();
   });
 });
-/*
-tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
+
+tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
+  const url = 'https://theUrl.com';
+  server.settings.app.urls[url] = {
+    name: 'name',
+    url: 'url',
+    statusCode: 200,
+    responseThreshold: 2000,
+    timeout: 2000,
+    retryDelay: 500,
+    retryCount: 1000,
+  };
+  server.methods.checkurl = (data) => {
+    t.deepEqual(data, {
+      type: 'http',
+      checkCount: 0,
+      name: 'name',
+      url: 'url',
+      statusCode: 200,
+      responseThreshold: 2000,
+      timeout: 2000,
+      retryDelay: 500,
+      retryCount: 1000,
+    });
+    t.end();
+  };
   server.inject({
     method: 'POST',
     url: '/api/command',
     payload: {
       token: 'aToken',
       command: '/health',
-      text: 'certs'
+      text: url
     }
   }, (response) => {
-    console.log(response.statusCode)
-    t.end();
   });
 });
 
-tap.test('accepts health command "name"', { timeout: 6000 }, (t) => {
+tap.test('returns Not Found if no url by that name', { timeout: 6000 }, (t) => {
   server.inject({
     method: 'POST',
     url: '/api/command',
@@ -80,8 +103,29 @@ tap.test('accepts health command "name"', { timeout: 6000 }, (t) => {
       text: 'name'
     }
   }, (response) => {
-    console.log(response.statusCode)
+    t.equal(response.statusCode, 404);
     t.end();
   });
 });
-*/
+
+tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
+  server.settings.app.urls = {};
+  server.settings.app.urls = [{
+    name: 'HTTPS Test',
+    url: process.env.HEALTHCHECK_TEST_URL,
+    interval: 'every 2 seconds',
+    expireLimit: 1000 * 60 * 60 * 24 * 1000
+  }];
+  server.inject({
+    method: 'POST',
+    url: '/api/command',
+    payload: {
+      token: 'aToken',
+      command: '/health',
+      text: 'certs'
+    }
+  }, (response) => {
+    t.equal(typeof response.result[process.env.HEALTHCHECK_TEST_URL], 'string');
+    t.end();
+  });
+});
