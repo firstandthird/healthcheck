@@ -24,6 +24,17 @@ tap.afterEach((done) => {
 });
 
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
+  server.settings.app.urls.http1 = {
+    name: 'name',
+    url: 'http://localhost:8080/test/http',
+    type: 'http',
+    interval: 'every 2 seconds',
+    statusCode: 200,
+    responseThreshold: 2000,
+    timeout: 2000,
+    retryDelay: 500,
+    retryCount: 1000,
+  };
   server.inject({
     method: 'POST',
     url: '/api/command',
@@ -33,9 +44,6 @@ tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
       text: 'status'
     }
   }, (response) => {
-    console.log('--------------------')
-    console.log(response.payload)
-    console.log(response.result)
     const obj = JSON.parse(response.payload);
     t.equal(typeof obj.http1, 'object');
     t.end();
