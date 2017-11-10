@@ -33,6 +33,9 @@ tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
       text: 'status'
     }
   }, (response) => {
+    console.log('--------------------')
+    console.log(response.payload)
+    console.log(response.result)
     const obj = JSON.parse(response.payload);
     t.equal(typeof obj.http1, 'object');
     t.end();
