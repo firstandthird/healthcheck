@@ -11,7 +11,7 @@ exports.testDown = {
       retries: 5,
       message: 'FAKE is down'
     };
-    request.server.log(['service-down', 'blah'], data);
+    request.server.log(['service-down', 'test'], data);
     reply(null, 'fake service-down log posted, make sure you got a notification for it');
   }
 };
