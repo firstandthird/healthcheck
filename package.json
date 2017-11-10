@@ -22,6 +22,7 @@
   "homepage": "https://github.com/firstandthird/healthcheck#readme",
   "dependencies": {
     "async": "^2.5.0",
+    "boom": "^7.1.1",
     "flat-file-db": "1.0.0",
     "hapi-method-scheduler": "2.2.0",
     "hapi-views": "^5.2.0",
