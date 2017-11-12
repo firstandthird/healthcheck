@@ -24,18 +24,22 @@ tap.afterEach((done) => {
 });
 
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
-  server.inject({
-    method: 'POST',
-    url: '/api/command',
-    payload: {
-      token: 'aToken',
-      command: '/health',
-      text: 'status'
-    }
-  }, (response) => {
-    const obj = JSON.parse(response.payload);
-    t.equal(typeof obj.http1, 'object');
-    t.end();
+  // must update all and wait for results before checking with slack:
+  server.methods.runall();
+  setTimeout(() => {
+    server.inject({
+      method: 'POST',
+      url: '/api/command',
+      payload: {
+        token: 'aToken',
+        command: '/health',
+        text: 'status'
+      }
+    }, (response) => {
+      const obj = JSON.parse(response.payload);
+      t.equal(typeof obj.http1, 'object');
+      t.end();
+    });
   });
 });
 
