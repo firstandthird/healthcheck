@@ -5,6 +5,7 @@ verbose: false
 ua: 'healthcheck'
 slack:
   emoji: '{{ENV.SLACK_EMOJI || ":warning:"}}'
+  channel: '{{ENV.SLACK_CHANNEL}}'
   slackHook: '{{ENV.SLACK_HOOK}}'
   slackCommandToken: '{{ENV.SLACK_TOKEN || false}}'
 sns:
@@ -65,6 +66,7 @@ plugins:
         reporter: 'logr-slack'
         options:
           iconEmoji: '{{slack.emoji}}'
+          channel: '{{ENV.SLACK_CHANNEL || undefined}}'
           enabled: '{{(slack.slackHook) ? true : false}}'
           throttle: '{{1000 * 60 * 10}}'
           throttleBasedOnTags: true
