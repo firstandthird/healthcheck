@@ -40,7 +40,7 @@ tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
       t.equal(typeof obj.http1, 'object');
       t.end();
     });
-  });
+  }, 5000);
 });
 
 tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
