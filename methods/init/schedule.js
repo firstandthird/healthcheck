@@ -8,7 +8,8 @@ module.exports = {
     }
     // register any schedules that were specified at start-up:
     config.urls.forEach(url => {
-      // each https url warns if SSL certificate expires in next 7 days
+      // each https url should implicitly do a cert check.
+      // cert check will warn if SSL certificate expires in next 7 days
       if (url.url.startsWith('https://')) {
         scheduler({
           label: `${url.name}.network.cert`,
@@ -41,6 +42,8 @@ module.exports = {
           timeout: url.timeout || config.timeout || 10000,
           retryDelay: url.retryDelay || config.retryDelay || 1000,
           retryCount: url.retryCount || config.retryCount || 1,
+          // if type is 'cert' it needs an expire limit:
+          expireLimit: url.expireLimit ? url.expireLimit : 1000 * 60 * 60 * 24 * 7,
           checkCount: 0
         }]
       };
