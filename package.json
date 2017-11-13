@@ -4,7 +4,6 @@
   "description": "Uptime and service checker",
   "scripts": {
     "start": "rapptor",
-    "dev": "npm install && npm prune && nodemon -x npm run example",
     "example": "rapptor --log example/log.json",
     "exampleurl": "rapptor --configUrl https://gist.githubusercontent.com/dawnerd/ea2a0bf8db74544395cbf77dba799350/raw/f60f0cf33978885ea6808f457c896dc8658b7d7e/healthcheck-test.yaml --log example/log.json",
     "test": "tap test/test.*",
