@@ -24,7 +24,7 @@
     "boom": "^7.1.1",
     "flat-file-db": "1.0.0",
     "hapi-method-scheduler": "2.2.0",
-    "hapi-views": "^5.2.0",
+    "hapi-views": "^5.6.0",
     "inert": "^4.2.0",
     "js-yaml": "^3.8.4",
     "lodash.maxby": "4.6.0",
