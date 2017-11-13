@@ -40,19 +40,23 @@ tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }
 });
 
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
-  server.inject({
-    method: 'POST',
-    url: '/api/command',
-    payload: {
-      token: 'aToken',
-      command: '/health',
-      text: 'status'
-    }
-  }, (response) => {
-    t.notEqual(response.result.indexOf('http1: DOWN (SLOW)'), -1);
-    t.notEqual(response.result.indexOf('http2: UP'), -1);
-    t.end();
-  });
+  // must update all and wait for results before checking with slack:
+  server.methods.runall();
+  setTimeout(() => {
+    server.inject({
+      method: 'POST',
+      url: '/api/command',
+      payload: {
+        token: 'aToken',
+        command: '/health',
+        text: 'status'
+      }
+    }, (response) => {
+      t.notEqual(response.result.indexOf('http1: DOWN (SLOW)'), -1);
+      t.notEqual(response.result.indexOf('http2: UP'), -1);
+      t.end();
+    });
+  }, 5000);
 });
 
 tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {

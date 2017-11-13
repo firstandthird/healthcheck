@@ -1,9 +1,10 @@
-FROM firstandthird/node:6.10-3-nobuild
+FROM firstandthird/node:8.8-dev
 
 USER root
 RUN apk --update --no-cache --virtual add iputils
 USER node
 
+ENV LOG_PATH $HOME/log/healthcheck.json
+
 EXPOSE 8080
-CMD ["dumb-init", "npm", "run", "dev"]
 
