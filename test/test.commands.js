@@ -33,8 +33,8 @@ tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }
       text: ''
     }
   }, (response) => {
-    const obj = JSON.parse(response.payload);
-    t.equal(typeof obj.http1, 'object');
+    t.notEqual(response.result.indexOf('http1: DOWN (SLOW)'), -1);
+    t.notEqual(response.result.indexOf('http2: UP'), -1);
     t.end();
   });
 });
@@ -49,8 +49,8 @@ tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
       text: 'status'
     }
   }, (response) => {
-    const obj = JSON.parse(response.payload);
-    t.equal(typeof obj.http1, 'object');
+    t.notEqual(response.result.indexOf('http1: DOWN (SLOW)'), -1);
+    t.notEqual(response.result.indexOf('http2: UP'), -1);
     t.end();
   });
 });
