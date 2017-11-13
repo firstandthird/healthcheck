@@ -74,7 +74,7 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
       text: 'check'
     }
   }, (response) => {
-    t.equal(response.result.success, true);
+    t.equal(response.result, 'Proceeding to update status for all urls....');
     t.end();
   });
 });
