@@ -24,19 +24,21 @@ tap.afterEach((done) => {
 });
 
 tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }, (t) => {
-  server.inject({
-    method: 'POST',
-    url: '/api/command',
-    payload: {
-      token: 'aToken',
-      command: '/health',
-      text: ''
-    }
-  }, (response) => {
-    t.notEqual(response.result.indexOf('http1: DOWN (SLOW)'), -1);
-    t.notEqual(response.result.indexOf('http2: UP'), -1);
-    t.end();
-  });
+  server.methods.runall();
+  setTimeout(() => {
+    server.inject({
+      method: 'POST',
+      url: '/api/command',
+      payload: {
+        token: process.env.SLACK_TOKEN,
+        command: '/health',
+        text: ''
+      }
+    }, (response) => {
+      t.notEqual(response.result.indexOf('http1: DOWN'), -1);
+      t.end();
+    });
+  }, 5000);
 });
 
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
@@ -47,13 +49,12 @@ tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
       method: 'POST',
       url: '/api/command',
       payload: {
-        token: 'aToken',
+        token: process.env.SLACK_TOKEN,
         command: '/health',
         text: 'status'
       }
     }, (response) => {
-      t.notEqual(response.result.indexOf('http1: DOWN (SLOW)'), -1);
-      t.notEqual(response.result.indexOf('http2: UP'), -1);
+      t.notEqual(response.result.indexOf('http1: DOWN'), -1);
       t.end();
     });
   }, 5000);
@@ -64,7 +65,7 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'check'
     }
@@ -92,7 +93,7 @@ tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'http1'
     }
@@ -105,7 +106,7 @@ tap.test('returns Not Found if no url by that name', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'name'
     }
@@ -127,7 +128,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'certs'
     }
