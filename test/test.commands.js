@@ -23,6 +23,22 @@ tap.afterEach((done) => {
   });
 });
 
+tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }, (t) => {
+  server.inject({
+    method: 'POST',
+    url: '/api/command',
+    payload: {
+      token: 'aToken',
+      command: '/health',
+      text: ''
+    }
+  }, (response) => {
+    const obj = JSON.parse(response.payload);
+    t.equal(typeof obj.http1, 'object');
+    t.end();
+  });
+});
+
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
   server.inject({
     method: 'POST',
@@ -55,27 +71,16 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
 });
 
 tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
-  const url = 'https://theUrl.com';
-  server.settings.app.urls[url] = {
-    name: 'name',
-    url: 'url',
-    statusCode: 200,
-    responseThreshold: 2000,
-    timeout: 2000,
-    retryDelay: 500,
-    retryCount: 1000,
-  };
   server.methods.checkurl = (data) => {
-    t.deepEqual(data, {
+    t.deepEqual(data, { name: 'http1',
+      url: 'http://localhost:8080/test/http',
       type: 'http',
-      checkCount: 0,
-      name: 'name',
-      url: 'url',
       statusCode: 200,
-      responseThreshold: 2000,
-      timeout: 2000,
-      retryDelay: 500,
-      retryCount: 1000,
+      responseThreshold: 1000,
+      timeout: 10000,
+      retryDelay: 1000,
+      retryCount: 1,
+      checkCount: 0
     });
     t.end();
   };
@@ -85,7 +90,7 @@ tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
     payload: {
       token: 'aToken',
       command: '/health',
-      text: url
+      text: 'http1'
     }
   }, (response) => {
   });
