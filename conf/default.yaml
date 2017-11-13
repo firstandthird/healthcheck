@@ -67,7 +67,7 @@ plugins:
         options:
           iconEmoji: '{{slack.emoji}}'
           channel: '{{ENV.SLACK_CHANNEL || undefined}}'
-          enabled: '{{(slack.slackHook) ? true : false}}'
+          enabled: '{{ENV.SLACK_HOOK || false}}'
           throttle: '{{1000 * 60 * 10}}'
           throttleBasedOnTags: true
           username: 'HealthCheck'
