@@ -23,6 +23,24 @@ tap.afterEach((done) => {
   });
 });
 
+tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }, (t) => {
+  server.methods.runall();
+  setTimeout(() => {
+    server.inject({
+      method: 'POST',
+      url: '/api/command',
+      payload: {
+        token: process.env.SLACK_TOKEN,
+        command: '/health',
+        text: ''
+      }
+    }, (response) => {
+      t.notEqual(response.result.indexOf('http1: DOWN'), -1);
+      t.end();
+    });
+  }, 5000);
+});
+
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
   // must update all and wait for results before checking with slack:
   server.methods.runall();
@@ -31,13 +49,12 @@ tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
       method: 'POST',
       url: '/api/command',
       payload: {
-        token: 'aToken',
+        token: process.env.SLACK_TOKEN,
         command: '/health',
         text: 'status'
       }
     }, (response) => {
-      const obj = JSON.parse(response.payload);
-      t.equal(typeof obj.http1, 'object');
+      t.notEqual(response.result.indexOf('http1: DOWN'), -1);
       t.end();
     });
   }, 5000);
@@ -48,7 +65,7 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'check'
     }
@@ -59,27 +76,16 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
 });
 
 tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
-  const url = 'https://theUrl.com';
-  server.settings.app.urls[url] = {
-    name: 'name',
-    url: 'url',
-    statusCode: 200,
-    responseThreshold: 2000,
-    timeout: 2000,
-    retryDelay: 500,
-    retryCount: 1000,
-  };
   server.methods.checkurl = (data) => {
-    t.deepEqual(data, {
+    t.deepEqual(data, { name: 'http1',
+      url: 'http://localhost:8080/test/http',
       type: 'http',
-      checkCount: 0,
-      name: 'name',
-      url: 'url',
       statusCode: 200,
-      responseThreshold: 2000,
-      timeout: 2000,
-      retryDelay: 500,
-      retryCount: 1000,
+      responseThreshold: 1000,
+      timeout: 10000,
+      retryDelay: 1000,
+      retryCount: 1,
+      checkCount: 0
     });
     t.end();
   };
@@ -87,9 +93,9 @@ tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
-      text: url
+      text: 'http1'
     }
   }, (response) => {
   });
@@ -100,7 +106,7 @@ tap.test('returns Not Found if no url by that name', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'name'
     }
@@ -122,7 +128,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
     method: 'POST',
     url: '/api/command',
     payload: {
-      token: 'aToken',
+      token: process.env.SLACK_TOKEN,
       command: '/health',
       text: 'certs'
     }
