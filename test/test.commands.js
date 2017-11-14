@@ -23,7 +23,7 @@ tap.afterEach((done) => {
   });
 });
 
-tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }, (t) => {
+tap.test('/health (without any text) returns list of options', { timeout: 6000 }, (t) => {
   server.methods.runall();
   setTimeout(() => {
     server.inject({
@@ -35,7 +35,11 @@ tap.test('/health (without any text) is the same as "status"', { timeout: 6000 }
         text: ''
       }
     }, (response) => {
-      t.notEqual(response.result.indexOf('http1: DOWN'), -1);
+      t.equal(response.result, `Options:
+          status: list last known status for each url
+          check: re-runs health check for all urls
+          [name]: re-runs health check for the specified the url entry
+          certs: re-runs certification check for all urls`);
       t.end();
     });
   }, 5000);
@@ -70,7 +74,7 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
       text: 'check'
     }
   }, (response) => {
-    t.equal(response.result.success, true);
+    t.equal(response.result, 'Proceeding to update status for all urls....');
     t.end();
   });
 });
