@@ -1,0 +1,69 @@
+plugins:
+  slack-command:
+    _enabled: '{{(slack.commandToken) ? true : false}}'
+    routeToListen: '/api/command'
+    token: '{{slack.commandToken}}'
+  './lib/slack':
+  hapi-method-loader:
+    _priority: -7
+  hapi-method-scheduler:
+    _priority: -6
+    timezone: 'America/Los_Angeles'
+    noParamsLength: true
+    schedule: []
+  vision:
+    _priority: -5
+  './lib/healthcheck':
+    _priority: -4
+  './lib/db':
+    logPath: '{{ logPath }}'
+    _priority: -4
+  inert:
+  hapi-route-loader:
+  hapi-logr:
+    reporters:
+      sns:
+        reporter: 'logr-sns'
+        options:
+          enabled: '{{ sns.enabled }}'
+          clientId: '{{ sns.clientId }}'
+          secretId: '{{ sns.secretId }}'
+          topic: '{{ sns.topic }}'
+          throttle: '{{1000 * 60 * 10}}'
+          throttleBasedOnTags: true
+          filter:
+            - 'service-down'
+            - 'service-restored'
+            - 'certificate-expiration'
+      consoleColor:
+        options:
+          colors:
+            'service-down': 'bgRed'
+            'service-restored': 'bgGreen'
+            'service-slow': 'bgYellow'
+      flat:
+        options:
+          tagColors:
+            'service-down': 'bgRed'
+            'service-restored': 'bgGreen'
+            'service-slow': 'bgYellow'
+      slack:
+        reporter: 'logr-slack'
+        options:
+          iconEmoji: '{{slack.emoji}}'
+          channel: '{{slack.channel}}'
+          enabled: '{{(slack.hook) ? true : false}}'
+          throttle: '{{1000 * 60 * 10}}'
+          throttleBasedOnTags: true
+          username: 'HealthCheck'
+          hideTags: true
+          slackHook: '{{slack.hook}}'
+          tagColors:
+            'service-down': 'danger'
+            'service-restored': 'good'
+            'service-slow': 'warning'
+          filter:
+            - 'service-down'
+            - 'service-restored'
+            - 'notice'
+            - 'certificate-expiration'
