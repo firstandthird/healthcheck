@@ -1,6 +1,6 @@
-exports.testDown = {
+exports.alert = {
   method: 'GET',
-  path: '/api/testDown',
+  path: '/test',
   handler(request, reply) {
     const data = {
       type: 'http',
@@ -11,7 +11,7 @@ exports.testDown = {
       retries: 5,
       message: 'FAKE is down'
     };
-    request.server.log(['service-down', 'test'], data);
+    request.server.log(['service-down', `test_${Math.random()}`], data);
     reply(null, 'fake service-down log posted, make sure you got a notification for it');
   }
 };
