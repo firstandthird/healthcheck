@@ -1,6 +1,6 @@
 exports.alert = {
   method: 'GET',
-  path: '/test',
+  path: '/alert',
   handler(request, reply) {
     const data = {
       type: 'http',
