@@ -67,3 +67,4 @@ plugins:
             - 'service-restored'
             - 'notice'
             - 'certificate-expiration'
+            - 'sns'

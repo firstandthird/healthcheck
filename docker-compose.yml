@@ -5,7 +5,7 @@ app:
     - '.:/home/app/src'
   environment:
     PORT: 8080
-    CONFIG: 0
+    FORCE_HTTPS: 'false'
     VIRTUAL_HOST: 'healthcheck.*'
-    FORCE_COLOR: 1
-    RAPPTOR_CONFIG_URL:
+    SLACK_HOOK:
+    SLACK_CHANNEL:
