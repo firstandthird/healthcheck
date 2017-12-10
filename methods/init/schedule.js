@@ -1,10 +1,10 @@
 module.exports = {
-  method(config, done) {
+  method(config) {
     const server = this;
     const scheduler = server.methods.methodScheduler.startSchedule;
     // if no schedules were specified in config then move on:
     if (!config.urls) {
-      return done();
+      return;
     }
     // register any schedules that were specified at start-up:
     config.urls.forEach(url => {
@@ -54,6 +54,5 @@ module.exports = {
         interval: time
       });
     });
-    done();
   }
 };

@@ -3,48 +3,39 @@ const async = require('async');
 const Rapptor = require('rapptor');
 
 let server;
-tap.beforeEach((allDone) => {
-  async.autoInject({
-    rapptor(done) {
-      const rapptor = new Rapptor({ env: 'test' });
-      rapptor.start(done);
-    },
-    setup(rapptor, done) {
-      server = rapptor[0];
-      return done(null, rapptor[0]);
-    },
-  }, allDone);
+tap.beforeEach(async(done) => {
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor[0];
+  done();
 });
 
-tap.afterEach((done) => {
+tap.afterEach(async() => {
   server.methods.methodScheduler.stopSchedule('http1');
-  server.stop(() => {
-    done();
-  });
+  await server.stop();
 });
 
-tap.test('/health (without any text) returns list of options', { timeout: 6000 }, (t) => {
+tap.test('/health (without any text) returns list of options', { timeout: 6000 }, async(t) => {
   server.methods.runall();
-  setTimeout(() => {
-    server.inject({
-      method: 'POST',
-      url: '/api/command',
-      payload: {
-        token: process.env.SLACK_TOKEN,
-        command: '/health',
-        text: ''
-      }
-    }, (response) => {
-      t.equal(response.result, `Options:
+  const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  wait(5000);
+  const response = await server.inject({
+    method: 'POST',
+    url: '/api/command',
+    payload: {
+      token: process.env.SLACK_TOKEN,
+      command: '/health',
+      text: ''
+    }
+  });
+  t.equal(response.result, `Options:
           status: list last known status for each url
           check: re-runs health check for all urls
           [name]: re-runs health check for the specified the url entry
           certs: re-runs certification check for all urls`);
-      t.end();
-    });
-  }, 5000);
+  t.end();
 });
-
+/*
 tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
   // must update all and wait for results before checking with slack:
   server.methods.runall();
@@ -141,3 +132,4 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
     t.end();
   });
 });
+*/

@@ -5,7 +5,7 @@ const maxBy = require('lodash.maxby');
 exports.all = {
   method: 'GET',
   path: '/api/all',
-  handler(request, reply) {
+  handler(request, h) {
     const server = request.server;
     const db = server.plugins.db.db;
     const results = db.get('results') || {};
@@ -23,7 +23,6 @@ exports.all = {
         results: results[result]
       };
     });
-
-    reply(output);
+    return output;
   }
-}
+};

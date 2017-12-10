@@ -1,7 +1,7 @@
 maxEntries: 100
 interval: 'every 10 seconds'
 retryDelay: 1000
-verbose: false
+verbose: true
 ua: 'healthcheck'
 logPath: '{{ENV.LOG_PATH}}'
 slack:
