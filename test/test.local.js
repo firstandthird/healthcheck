@@ -11,10 +11,15 @@ tap.test('schedules network http', { timeout: 6000 }, async(t) => {
     method: 'get',
     path: '/test/http',
     handler(request, h) {
-      return ' ';
+      return 'hello';
     }
   });
   server.methods.report = async(data, result) => {
+    console.log('+++++++++++++++++++++++++++++=')
+    console.log('+++++++++++++++++++++++++++++=')
+    console.log('+++++++++++++++++++++++++++++=')
+    console.log(data)
+    console.log(result)
     if (data.name === 'http1' && !called) {
       called = true;
       server.methods.methodScheduler.stopSchedule('http1');
