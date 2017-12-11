@@ -3,29 +3,26 @@ const async = require('async');
 exports.manual = {
   method: 'GET',
   path: '/api/cert',
-  handler(request, reply) {
+  handler(request, h) {
     const server = request.server;
     const config = server.settings.app;
     const expirations = {};
-    async.each(config.urls, (obj, eachDone) => {
+    for (let i = 0; i < config.urls.length; i++) {
+      const obj = config.urls[i];
       const url = obj.url;
       if (!url.startsWith('https:')) {
-        return eachDone();
+        continue;
       }
-      server.methods.getFreshCertificate(url, (err, res) => {
-        if (err) {
-          expirations[url] = err;
-          return eachDone();
-        }
+      try {
+        const res = server.methods.getFreshCertificate(url);
         const day = 24 * 60 * 60 * 1000;
         expirations[url] = `Expires in ${(res.expiresIn / day).toFixed(1)} days on ${res.expiresOn}`;
-        eachDone();
-      });
-    }, (err) => {
-      if (err) {
-        return reply().code(500);
+        continue;
+      } catch (err) {
+        expirations[url] = err;
+        continue;
       }
-      reply(null, expirations);
-    });
+    }
+    return expirations;
   }
 };

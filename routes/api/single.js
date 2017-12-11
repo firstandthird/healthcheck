@@ -5,7 +5,7 @@ const maxBy = require('lodash.maxby');
 exports.single = {
   method: 'GET',
   path: '/api/single',
-  handler(request, reply) {
+  handler(request, h) {
     const server = request.server;
     const db = server.plugins.healthcheck.db;
     const results = db.get('results') || {};
@@ -22,6 +22,6 @@ exports.single = {
       results: result
     };
 
-    reply(output);
+    return output;
   }
-}
+};
