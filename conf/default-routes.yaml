@@ -1,10 +1,9 @@
 plugins:
   hapi-views:
     dataPath: '{{CWD}}'
-    views:
-      '/status':
+    routes:
+      '/routes':
         view: 'pages/status'
-        inject:
-          status: '/api/all'
         data:
-          status: '{inject.status}'
+          # status: '{request.server.inject('api/all').result.status}'
+          status: '/api/all'

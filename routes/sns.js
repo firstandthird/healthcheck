@@ -2,18 +2,16 @@ const wreck = require('wreck');
 exports.sns = {
   path: '/sns',
   method: 'POST',
-  handler(request, reply) {
+  handler(request, h) {
     const server = request.server;
     const payload = JSON.parse(request.payload);
     if (payload.Type === 'SubscriptionConfirmation') {
-      wreck.get(payload.SubscribeURL, (err, res, p) => {
-        if (err) {
-          server.log(['sns', 'error'], err);
-          return;
-        }
+      try {
+        wreck.get(payload.SubscribeURL);
         server.log(['sns', 'confirmation'], 'SNS Subscription Confirmed');
-      });
-      return;
+      } catch (err) {
+        server.log(['sns', 'error'], err);
+      }
     }
     let message = payload.Message;
     if (payload.Message[0] === '{') {
@@ -22,6 +20,6 @@ exports.sns = {
       delete message.Event;
     }
     server.log(['sns'], message);
-    reply(null, 'ok');
+    return 'ok';
   }
 };
