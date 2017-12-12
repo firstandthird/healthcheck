@@ -1,7 +1,7 @@
 const Wreck = require('wreck');
 
 module.exports = {
-  method(data) {
+  method: async function (data) {
     const server = this;
     const start = Date.now();
     const config = server.settings.app;
@@ -14,30 +14,25 @@ module.exports = {
     };
 
     try {
-      const { res, payload } = Wreck.get(data.url, {
+      const { res, payload } = await Wreck.get(data.url, {
         timeout: data.timeout,
         headers: config.headers
       });
-
       const responseText = payload instanceof Buffer ? payload.toString() : '';
-
       if (res.statusCode === data.statusCode) {
         result.up = true;
       } else {
         result.up = false;
         result.error = `Status code: ${res.statusCode}`;
       }
-
       if (result.up && data.containsText && responseText.indexOf(data.containsText) === -1) {
         result.up = false;
         result.error = 'Text not found';
       }
-
       if (result.responseTime > data.responseThreshold) {
         result.slow = true;
         result.error = 'Response threshold';
       }
-
       if ((!result.up || result.slow) && data.checkCount < data.retryCount) {
         return setTimeout(() => {
           data.checkCount++;

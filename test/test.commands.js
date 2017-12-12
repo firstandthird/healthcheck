@@ -1,14 +1,7 @@
 const tap = require('tap');
-const async = require('async');
 const Rapptor = require('rapptor');
 
 let server;
-tap.beforeEach(async(done) => {
-  const rapptor = new Rapptor({ env: 'test' });
-  await rapptor.start();
-  server = rapptor[0];
-  done();
-});
 
 tap.afterEach(async() => {
   server.methods.methodScheduler.stopSchedule('http1');
@@ -16,6 +9,9 @@ tap.afterEach(async() => {
 });
 
 tap.test('/health (without any text) returns list of options', { timeout: 6000 }, async(t) => {
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor.server;
   server.methods.runall();
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   wait(5000);
@@ -35,28 +31,32 @@ tap.test('/health (without any text) returns list of options', { timeout: 6000 }
           certs: re-runs certification check for all urls`);
   t.end();
 });
-/*
-tap.test('accepts health command "status"', { timeout: 6000 }, (t) => {
+
+tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
   // must update all and wait for results before checking with slack:
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor.server;
   server.methods.runall();
-  setTimeout(() => {
-    server.inject({
-      method: 'POST',
-      url: '/api/command',
-      payload: {
-        token: process.env.SLACK_TOKEN,
-        command: '/health',
-        text: 'status'
-      }
-    }, (response) => {
-      t.notEqual(response.result.indexOf('http1: DOWN'), -1);
-      t.end();
-    });
-  }, 5000);
+  const response = await server.inject({
+    method: 'POST',
+    url: '/api/command',
+    payload: {
+      token: process.env.SLACK_TOKEN,
+      command: '/health',
+      text: 'status'
+    }
+  });
+  t.notEqual(response.result.indexOf('http1: DOWN'), -1);
+  t.end();
 });
 
-tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
-  server.inject({
+tap.test('accepts health command "check"', async(t) => {
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor.server;
+  server.methods.runall();
+  const response = await server.inject({
     method: 'POST',
     url: '/api/command',
     payload: {
@@ -64,13 +64,16 @@ tap.test('accepts health command "check"', { timeout: 6000 }, (t) => {
       command: '/health',
       text: 'check'
     }
-  }, (response) => {
-    t.equal(response.result, 'Proceeding to update status for all urls....');
-    t.end();
   });
+  t.equal(response.result, 'Proceeding to update status for all urls....');
+  t.end();
 });
 
-tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
+tap.test('accepts individual urls', async(t) => {
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor.server;
+  server.methods.runall();
   server.methods.checkurl = (data) => {
     t.deepEqual(data, { name: 'http1',
       url: 'http://localhost:8080/test/http',
@@ -84,7 +87,7 @@ tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
     });
     t.end();
   };
-  server.inject({
+  await server.inject({
     method: 'POST',
     url: '/api/command',
     payload: {
@@ -92,12 +95,15 @@ tap.test('accepts individual urls', { timeout: 6000 }, (t) => {
       command: '/health',
       text: 'http1'
     }
-  }, (response) => {
   });
 });
 
-tap.test('returns Not Found if no url by that name', { timeout: 6000 }, (t) => {
-  server.inject({
+tap.test('returns Not Found if no url by that name', { timeout: 6000 }, async(t) => {
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor.server;
+  server.methods.runall();
+  const response = await server.inject({
     method: 'POST',
     url: '/api/command',
     payload: {
@@ -105,13 +111,16 @@ tap.test('returns Not Found if no url by that name', { timeout: 6000 }, (t) => {
       command: '/health',
       text: 'name'
     }
-  }, (response) => {
-    t.equal(response.statusCode, 404);
-    t.end();
   });
+  t.equal(response.statusCode, 404);
+  t.end();
 });
 
-tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
+tap.test('accepts health command "certs"', { timeout: 6000 }, async(t) => {
+  const rapptor = new Rapptor({ env: 'test' });
+  await rapptor.start();
+  server = rapptor.server;
+  server.methods.runall();
   server.settings.app.urls = {};
   server.settings.app.urls = [{
     name: 'HTTPS Test',
@@ -119,7 +128,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
     interval: 'every 2 seconds',
     expireLimit: 1000 * 60 * 60 * 24 * 1000
   }];
-  server.inject({
+  const response = await server.inject({
     method: 'POST',
     url: '/api/command',
     payload: {
@@ -127,9 +136,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, (t) => {
       command: '/health',
       text: 'certs'
     }
-  }, (response) => {
-    t.equal(typeof response.result[process.env.HEALTHCHECK_TEST_URL], 'string');
-    t.end();
   });
+  t.equal(typeof response.result[process.env.HEALTHCHECK_TEST_URL], 'string');
+  t.end();
 });
-*/

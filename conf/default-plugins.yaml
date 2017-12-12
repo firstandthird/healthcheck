@@ -1,23 +1,21 @@
 plugins:
-  slack-command:
+  hapi-slack-command:
     _enabled: '{{(slack.commandToken) ? true : false}}'
-    routeToListen: '/api/command'
     token: '{{slack.commandToken}}'
-  './lib/slack':
   hapi-method-loader:
     _priority: -7
   hapi-method-scheduler:
-    _priority: -6
+    _priority: -10
     timezone: 'America/Los_Angeles'
     noParamsLength: true
     schedule: []
   vision:
     _priority: -5
   './lib/healthcheck':
-    _priority: -4
+    _priority: -7
   './lib/db':
     logPath: '{{ logPath }}'
-    _priority: -4
+    _priority: -10
   inert:
   hapi-route-loader:
   hapi-logr:
@@ -68,3 +66,4 @@ plugins:
             - 'notice'
             - 'certificate-expiration'
             - 'sns'
+  './lib/slack':

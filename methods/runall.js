@@ -1,5 +1,5 @@
 module.exports = {
-  method() {
+  method: async function() {
     const server = this;
     const config = server.settings.app;
 
