@@ -25,10 +25,10 @@ tap.test('/health (without any text) returns list of options', { timeout: 6000 }
     }
   });
   t.equal(response.result, `Options:
-          status: list last known status for each url
-          check: re-runs health check for all urls
-          [name]: re-runs health check for the specified the url entry
-          certs: re-runs certification check for all urls`);
+        status: list last known status for each url
+        check: re-runs health check for all urls
+        [name]: re-runs health check for the specified the url entry
+        certs: re-runs certification check for all urls`);
   t.end();
 });
 
