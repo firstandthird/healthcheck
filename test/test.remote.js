@@ -198,25 +198,16 @@ tap.test('can handle cert warnings', async(t) => {
   const rapptor = new Rapptor();
   await rapptor.start();
   const server = rapptor.server;
-  server.log = (tags, input) => {
-    if (tags.indexOf('HTTPS Test.network.cert') !== -1) {
-      testResults.tagName = true;
-    }
-    if (tags.indexOf('certificate-expiration') !== -1) {
-      testResults.tagCertificate = true;
-    }
-    if (input.message.indexOf('The SSL certificate for') !== -1) {
-      testResults.message = true;
-    }
+  server.methods.report = async(data, results) => {
+    t.equal(typeof results.timestamp, 'number', 'reports the timestamp');
+    t.equal(typeof results.expiresIn, 'number', 'reports the certificate expiration time');
+    server.methods.methodScheduler.stopSchedule('HTTPS Test.network.cert');
+    server.methods.methodScheduler.stopSchedule('HTTPS Test');
+    await server.stop();
+    await configServer.stop();
+    t.end();
   };
   // wait for it to make calls and log things:
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   await wait(5000);
-  server.methods.methodScheduler.stopSchedule('HTTPS Test.network.cert');
-  server.methods.methodScheduler.stopSchedule('HTTPS Test');
-  await server.stop();
-  await configServer.stop();
-  t.equal(testResults.tagCertificate, true, 'contains "certificate-expiration" tag');
-  t.equal(testResults.message, true, 'certificate expiration explains what it is warning about');
-  t.end();
 });
