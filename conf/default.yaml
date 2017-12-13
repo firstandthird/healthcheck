@@ -1,5 +1,6 @@
 maxEntries: 100
 interval: 'every 10 seconds'
+userAgent: '{{ENV.USER_AGENT || ""}}'
 retryDelay: 1000
 verbose: false
 ua: 'healthcheck'
