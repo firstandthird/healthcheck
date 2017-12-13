@@ -22,6 +22,7 @@
     <thead>
       <tr>
         <th>Service</th>
+        <th>URL</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -30,6 +31,7 @@
         {% set stat = service.results | last %}
         <tr>
           <td>{{ name }}</td>
+          <td>{{ stat.url }}</td>
           <td>
             {% if not stat.up %}
             <span class="down">DOWN</span>
