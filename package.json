@@ -23,7 +23,6 @@
     "async": "^2.5.0",
     "boom": "^7.1.1",
     "flat-file-db": "1.0.0",
-    "hapi-log-response": "^2.0.1",
     "hapi-method-scheduler": "^3.0.0",
     "hapi-slack-command": "^2.0.0",
     "hapi-views": "^6.1.0",

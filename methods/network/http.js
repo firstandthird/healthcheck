@@ -1,7 +1,7 @@
 const Wreck = require('wreck');
 
 module.exports = {
-  method: async function (data) {
+  async method(data) {
     const server = this;
     const start = Date.now();
     const config = server.settings.app;

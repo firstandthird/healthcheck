@@ -7,6 +7,8 @@ exports.sns = {
     const payload = JSON.parse(request.payload);
     if (payload.Type === 'SubscriptionConfirmation') {
       try {
+        // without 'await', the promise returned by 'wreck.get' will
+        // complete its execution  without blocking the rest of the code:
         wreck.get(payload.SubscribeURL);
         server.log(['sns', 'confirmation'], 'SNS Subscription Confirmed');
       } catch (err) {

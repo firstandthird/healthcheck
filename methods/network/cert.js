@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  method: async function(data) {
+  async method(data) {
     // set the type:
     data.type = 'certification';
     const server = this;

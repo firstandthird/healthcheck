@@ -1,7 +1,7 @@
 const https = require('https');
 module.exports = {
   method(url) {
-    return new Promise(async(resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let requestUrl = url.startsWith('https://') ? url.replace('https://', '') : url;
       requestUrl = requestUrl.split('/')[0];
       const options = {
