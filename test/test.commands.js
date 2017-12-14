@@ -47,7 +47,12 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
       text: 'status'
     }
   });
-  t.notEqual(response.result.indexOf('http1: DOWN'), -1);
+  t.deepEqual(response.result, { response_type: 'in_channel',
+    text: 'Status',
+    attachments: [{
+      text: 'http1: DOWN  \nhttp2: UP  \nHTTPS Test: DOWN  \n'
+    }]
+  });
   t.end();
 });
 
