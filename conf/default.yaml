@@ -11,6 +11,7 @@ slack:
   commandToken: '{{ENV.SLACK_TOKEN || false}}'
 sns:
   enabled: '{{(ENV.SNS_TOPIC) ? true : false}}'
+  region: '{{ ENV.AWS_REGION }}'
   clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
   secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
   topic: '{{ ENV.SNS_TOPIC }}'

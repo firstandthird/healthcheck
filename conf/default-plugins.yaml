@@ -26,6 +26,7 @@ plugins:
           enabled: '{{ sns.enabled }}'
           clientId: '{{ sns.clientId }}'
           secretId: '{{ sns.secretId }}'
+          region: '{{ sns.region }}'
           topic: '{{ sns.topic }}'
           throttle: '{{1000 * 60 * 10}}'
           throttleBasedOnTags: true
