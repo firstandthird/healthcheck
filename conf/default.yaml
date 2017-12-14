@@ -3,6 +3,7 @@ interval: 'every 10 seconds'
 retryDelay: 1000
 verbose: false
 ua: 'healthcheck'
+userAgent: '{{ENV.USER_AGENT || ""}}'
 logPath: '{{ENV.LOG_PATH}}'
 slack:
   emoji: '{{ENV.SLACK_EMOJI || ":warning:"}}'
