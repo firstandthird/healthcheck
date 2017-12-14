@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 module.exports = {
-  method: async function(data, result) {
+  async method(data, result) {
     const server = this;
     const db = server.plugins.db.db;
     const config = server.settings.app;

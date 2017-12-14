@@ -1,7 +1,7 @@
 const ping = require('ping');
 
 module.exports = {
-  method: async(data) => {
+  async method(data) {
     const server = this;
 
     const res = await ping.promise.probe(data.url, { timeout: data.timeout / 1000 });
