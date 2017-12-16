@@ -47,7 +47,8 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
       text: 'status'
     }
   });
-  t.notEqual(response.result.indexOf('http1: DOWN'), -1);
+  t.equal(response.result.response_type, 'in_channel', 'inserts in_channel response type');
+  t.equal(response.result.attachments[0].text.startsWith('http1: DOWN'), true, 'prints the correct text');
   t.end();
 });
 
