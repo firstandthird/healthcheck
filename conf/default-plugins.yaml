@@ -8,6 +8,7 @@ plugins:
     _priority: -10
     timezone: 'America/Los_Angeles'
     noParamsLength: true
+    verbose: '{{verbose}}'
     schedule: []
   vision:
     _priority: -5
