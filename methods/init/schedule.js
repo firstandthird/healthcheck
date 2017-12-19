@@ -4,7 +4,7 @@ module.exports = {
     const scheduler = server.methods.methodScheduler.startSchedule;
     // if no schedules were specified in config then move on:
     if (!config.urls) {
-      return;
+      throw new Error('No URLs specified in configuration');
     }
     // register any schedules that were specified at start-up:
     config.urls.forEach(url => {

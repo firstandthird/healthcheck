@@ -2,7 +2,9 @@ module.exports = {
   async method() {
     const server = this;
     const config = server.settings.app;
-
+    if (!config.urls) {
+      throw new Error('No URLs specified in configuration');
+    }
     config.urls.forEach(url => {
       const data = {
         name: url.name || url.url,

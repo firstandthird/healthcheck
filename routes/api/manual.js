@@ -7,6 +7,9 @@ exports.manual = {
     const server = request.server;
     const config = server.settings.app;
     const expirations = {};
+    if (!config.urls) {
+      throw new Error('No URLs specified in configuration');
+    }
     for (let i = 0; i < config.urls.length; i++) {
       const obj = config.urls[i];
       const url = obj.url;
