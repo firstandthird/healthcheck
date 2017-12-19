@@ -188,7 +188,7 @@ tap.test('can handle cert warnings', async(t) => {
           type: 'cert',
           url: process.env.HEALTHCHECK_TEST_URL,
           interval: 'every 2 seconds',
-          expireLimit: 1000 * 60 * 60 * 24 * 1000
+          expireLimit: 1000
         }]
       };
     }
