@@ -138,6 +138,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, async(t) => {
       text: 'certs'
     }
   });
-  t.equal(typeof response.result[process.env.HEALTHCHECK_TEST_URL], 'string');
+  t.equal(response.result.text, 'Certification Statuses');
+  t.equal(Array.isArray(response.result.attachments), true);
   t.end();
 });
