@@ -20,6 +20,7 @@ plugins:
   inert:
   hapi-route-loader:
   hapi-logr:
+    requests: false
     reporters:
       sns:
         reporter: 'logr-sns'
