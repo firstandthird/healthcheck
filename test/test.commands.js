@@ -48,7 +48,7 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
     }
   });
   t.equal(response.result.response_type, 'in_channel', 'inserts in_channel response type');
-  t.equal(response.result.attachments[0].text.startsWith('http1: DOWN'), true, 'prints the correct text');
+  t.equal(response.result.attachments[0].title, 'http1', 'prints the correct text');
   t.end();
 });
 
@@ -138,6 +138,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, async(t) => {
       text: 'certs'
     }
   });
-  t.equal(typeof response.result[process.env.HEALTHCHECK_TEST_URL], 'string');
+  t.equal(response.result.text, 'Certification Statuses');
+  t.equal(Array.isArray(response.result.attachments), true);
   t.end();
 });

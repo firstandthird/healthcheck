@@ -1,9 +1,8 @@
-const async = require('async');
 
 exports.manual = {
   method: 'GET',
   path: '/api/cert',
-  handler(request, h) {
+  async handler(request, h) {
     const server = request.server;
     const config = server.settings.app;
     const expirations = {};
@@ -17,9 +16,8 @@ exports.manual = {
         continue;
       }
       try {
-        const res = server.methods.getFreshCertificate(url);
-        const day = 24 * 60 * 60 * 1000;
-        expirations[url] = `Expires in ${(res.expiresIn / day).toFixed(1)} days on ${res.expiresOn}`;
+        const res = await server.methods.getFreshCertificate(url);
+        expirations[url] = res;
         continue;
       } catch (err) {
         expirations[url] = err;
