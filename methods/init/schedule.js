@@ -13,13 +13,15 @@ module.exports = {
       if (url.url.startsWith('https://')) {
         scheduler({
           label: `${url.name}.network.cert`,
+          // will do a preliminary check when server is first launched:
+          runOnStart: true,
           method: 'network.cert',
           time: 'every 24 hours',
           params: [{
             name: `${url.name || url.url}.network.cert`,
             url: url.url,
             // can specify how close to expiration to consider a 'warning' range:
-            expireLimit: url.expireLimit ? url.expireLimit : 1000 * 60 * 60 * 24 * 7,
+            expireMin: url.expireMin ? url.expireMin : 1000 * 60 * 60 * 24 * 7,
           }]
         });
       }
@@ -43,7 +45,7 @@ module.exports = {
           retryDelay: url.retryDelay || config.retryDelay || 1000,
           retryCount: url.retryCount || config.retryCount || 1,
           // if type is 'cert' it needs an expire limit:
-          expireLimit: url.expireLimit ? url.expireLimit : 1000 * 60 * 60 * 24 * 7,
+          expireMin: url.expireMin ? url.expireMin : 1000 * 60 * 60 * 24 * 7,
           checkCount: 0
         }]
       };

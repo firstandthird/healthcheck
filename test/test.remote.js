@@ -164,7 +164,7 @@ tap.test('server.methods.report reports info on certification failure', async(t)
   };
   const result = {
     url: process.env.HEALTHCHECK_TEST_URL,
-    expireLimit: 86400000000,
+    expireMin: 86400000000,
     expiresIn: 4199784696
   };
   server.methods.report(data, result);
@@ -185,10 +185,9 @@ tap.test('can handle cert warnings', async(t) => {
       return {
         urls: [{
           name: 'HTTPS Test',
-          type: 'cert',
           url: process.env.HEALTHCHECK_TEST_URL,
           interval: 'every 2 seconds',
-          expireLimit: 1000
+          expireMin: 86400000000,
         }]
       };
     }

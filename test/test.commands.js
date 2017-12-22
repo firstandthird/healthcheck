@@ -127,7 +127,7 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, async(t) => {
     name: 'HTTPS Test',
     url: process.env.HEALTHCHECK_TEST_URL,
     interval: 'every 2 seconds',
-    expireLimit: 1000 * 60 * 60 * 24 * 1000
+    expireMin: 1000 * 60 * 60 * 24 * 1000
   }];
   const response = await server.inject({
     method: 'POST',

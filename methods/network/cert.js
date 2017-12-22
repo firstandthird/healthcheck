@@ -8,7 +8,7 @@ module.exports = {
     try {
       const res = await server.methods.getFreshCertificate(data.url);
       const expiresIn = res.expiresIn;
-      if (expiresIn > data.expireLimit) {
+      if (expiresIn < data.expireMin) {
         server.methods.report(data, {
           timestamp: Date.now(),
           expiresIn
