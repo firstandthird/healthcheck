@@ -22,7 +22,6 @@ module.exports = {
 
     result.error = (result.error) ? result.error.toString() : null;
     results[data.name].push(result);
-
     db.put('results', results);
 
     const tags = ['service-check', data.name];
@@ -35,41 +34,48 @@ module.exports = {
       error: result.error,
       retries: data.checkCount || 0
     };
+
+    // report all certificate expiration warnings:
     if (data.type === 'certification') {
       tags.push('certificate-expiration');
+      logData.message = `The SSL certificate for ${data.url} expires in ${(result.expiresIn / (1000 * 60 * 60 * 24)).toFixed(2)} days `;
+      return server.log(tags, logData);
     }
+
+    // report all outages:
     if (!result.up) {
       if (status[data.name].up !== false) {
         status[data.name] = {
           up: false,
           downSince: Date.now()
         };
-
         db.put('status', status);
       }
-      if (data.type !== 'certification') {
-        tags.push('service-down');
-      }
-      if (data.type === 'certification') {
-        logData.message = `The SSL certificate for ${data.url} expires in ${(result.expiresIn / (1000 * 60 * 60 * 24)).toFixed(2)} days `;
-      } else {
-        logData.message = `${data.name} is down`;
-      }
-    } else if (result.slow) {
-      tags.push('service-slow');
-    } else {
-      const wasDown = (status[data.name].up === false);
-
-      if (wasDown) {
-        logData.downSince = status[data.name].downSince;
-        logData.downFor = moment(logData.downSince).toNow(true);
-        logData.message = `${data.name} is back up after ${logData.downFor}`;
-        delete status[data.name];
-        db.put('status', status);
-        tags.push('service-restored');
-      }
+      tags.push('service-down');
+      logData.message = `${data.name} is down`;
+      return server.log(tags, logData);
     }
-    if (tags.length > 2 || config.verbose) {
+
+    // report slowness:
+    if (result.slow) {
+      tags.push('service-slow');
+      return server.log(tags, logData);
+    }
+
+    // if it was up, report if it just came back up from an outage:
+    const wasDown = (status[data.name].up === false);
+    if (wasDown) {
+      logData.downSince = status[data.name].downSince;
+      logData.downFor = moment(logData.downSince).toNow(true);
+      logData.message = `${data.name} is back up after ${logData.downFor}`;
+      delete status[data.name];
+      db.put('status', status);
+      tags.push('service-restored');
+      return server.log(tags, logData);
+    }
+
+    // if everything is fine then only log in verbose mode:
+    if (config.verbose) {
       server.log(tags, logData);
     }
   }
