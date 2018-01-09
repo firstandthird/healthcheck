@@ -210,3 +210,49 @@ tap.test('can handle cert warnings', async(t) => {
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   await wait(5000);
 });
+
+tap.test('will retry before reporting', async(t) => {
+  // set up a remote route that healthcheck can get its config from:
+  const configServer = new Hapi.Server({ port: 3000 });
+  configServer.route({
+    method: 'get',
+    path: '/confi',
+    handler(request, h) {
+      return {
+        urls: [{
+          name: 'HTTPS Test',
+          url: 'http://localhost:3000/getIt',
+          type: 'http',
+          interval: 'every 2 seconds',
+          expireMin: 86400000000,
+          retryCount: 5,
+          retryDelay: 500
+        }]
+      };
+    }
+  });
+  configServer.route({
+    path: '/getIt',
+    method: 'get',
+    handler(request, h) {
+    }
+  });
+  await configServer.start();
+  process.env.RAPPTOR_CONFIG_URL = 'http://localhost:3000/confi';
+  const rapptor = new Rapptor();
+  await rapptor.start();
+  const server = rapptor.server;
+  const counts = [];
+  server.methods.report = (data, results) => {
+    counts.push(data.checkCount);
+  };
+  // wait for it to make calls and log things:
+  const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  await wait(5000);
+  server.methods.methodScheduler.stopSchedule('HTTPS Test');
+  await server.stop();
+  await configServer.stop();
+  t.equal(counts.length, 1, 'only calls once in time period');
+  t.equal(counts[0], 5, 'does not report problems until retries are expired');
+  t.end();
+});

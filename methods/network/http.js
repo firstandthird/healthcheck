@@ -33,12 +33,6 @@ module.exports = {
         result.slow = true;
         result.error = 'Response threshold';
       }
-      if ((!result.up || result.slow) && data.checkCount < data.retryCount) {
-        return setTimeout(() => {
-          data.checkCount++;
-          server.methods.network.http(data);
-        }, data.retryDelay);
-      }
     } catch (err) {
       // see if it was an error we were expecting anyway:
       if (err.output && err.output.statusCode === data.statusCode) {
@@ -47,8 +41,15 @@ module.exports = {
         result.error = err;
       }
     } finally {
-      server.methods.report(data, result);
-      data.checkCount = 0; // Reset
+      // only report after we've re-tried the specified number of times:
+      if ((!result.up || result.slow) && data.checkCount < data.retryCount) {
+        data.checkCount++;
+        return setTimeout(() => {
+          server.methods.network.http(data);
+        }, data.retryDelay);
+      }
+      await server.methods.report(data, result);
+      data.checkCount = 0; // Reset after reporting
     }
   }
 };
