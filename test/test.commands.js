@@ -45,6 +45,9 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
     }
   });
   await server.methods.runall();
+  // give it time to make a few tries:
+  const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  await wait(5000);
   const response = await server.inject({
     method: 'POST',
     url: '/api/command',
