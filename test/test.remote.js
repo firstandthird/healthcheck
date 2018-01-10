@@ -20,6 +20,7 @@ tap.test('can load a schedule from remote', async(t) => {
       };
     }
   });
+  // just testing something
   await configServer.start();
   process.env.RAPPTOR_CONFIG_URL = 'http://localhost:3000/confi';
   const rapptor = new Rapptor();
