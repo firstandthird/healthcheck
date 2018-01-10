@@ -37,7 +37,7 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
   const rapptor = new Rapptor({ env: 'test' });
   await rapptor.start();
   server = rapptor.server;
-  server.methods.runall();
+  await server.methods.runall();
   const response = await server.inject({
     method: 'POST',
     url: '/api/command',
