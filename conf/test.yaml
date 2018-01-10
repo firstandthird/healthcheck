@@ -2,5 +2,6 @@ urls:
   -
     name: 'http1'
     url: http://localhost:8080/test/http
+    retryCount: 0
     type: http
     interval: 'every 2 seconds'
