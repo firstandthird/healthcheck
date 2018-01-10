@@ -48,6 +48,7 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
     }
   });
   t.equal(response.result.response_type, 'in_channel', 'inserts in_channel response type');
+  console.log(response.result)
   t.equal(response.result.attachments[0].title, 'http1', 'prints the correct text');
   t.end();
 });
