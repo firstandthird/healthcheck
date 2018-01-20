@@ -44,6 +44,7 @@ module.exports = {
       // only report after we've re-tried the specified number of times:
       if ((!result.up || result.slow) && data.checkCount < data.retryCount) {
         data.checkCount++;
+        server.log(['service-check', data.name, 'retry'], data);
         return setTimeout(() => {
           server.methods.network.http(data);
         }, data.retryDelay);
