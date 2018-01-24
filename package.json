@@ -1,6 +1,6 @@
 {
   "name": "@firstandthird/healthcheck",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Uptime and service checker",
   "scripts": {
     "start": "rapptor",
