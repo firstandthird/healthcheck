@@ -1,5 +1,5 @@
 maxEntries: 100
-interval: 'every 10 seconds'
+interval: 'every 30 seconds'
 verbose: true
 retryDelay: 500
 urls:
@@ -12,10 +12,8 @@ urls:
     name: 'Random'
     url: http://localhost:8080/api/random
     type: http
-    interval: 'every 2 seconds'
   -
     name: 'Dev'
     url: localhost
     type: ping
-    interval: 'every 1 second'
     responseThreshold: 30

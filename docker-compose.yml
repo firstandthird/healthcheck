@@ -3,9 +3,12 @@ app:
   dockerfile: 'DockerfileDev'
   volumes:
     - '.:/home/app/src'
+  ports:
+    - 8080:8080
   environment:
     PORT: 8080
     FORCE_HTTPS: 'false'
-    VIRTUAL_HOST: 'healthcheck.*'
+    NODE_ENV: 'dev'
     SLACK_HOOK:
     SLACK_CHANNEL:
+    SLACK_TOKEN:

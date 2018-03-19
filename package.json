@@ -24,7 +24,7 @@
     "boom": "^7.1.1",
     "flat-file-db": "1.0.0",
     "hapi-method-scheduler": "^3.0.2",
-    "hapi-slack-command": "^2.0.0",
+    "hapi-slack-command": "^2.2.0",
     "hapi-views": "^6.1.0",
     "inert": "^5.0.1",
     "js-yaml": "^3.8.4",
