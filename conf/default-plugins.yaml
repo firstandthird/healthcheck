@@ -19,7 +19,7 @@ plugins:
     _dependencies:
       - 'hapi-method-scheduler'
       - './lib/db'
-      # - './lib/slack'
+      - './lib/slack'
   './lib/db':
     logPath: '{{ logPath }}'
   inert:
