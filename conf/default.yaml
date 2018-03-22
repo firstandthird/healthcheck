@@ -9,11 +9,11 @@ slack:
   emoji: '{{getEnv("SLACK_EMOJI", ":warning:")}}'
   channel: '{{getEnv("SLACK_CHANNEL", undefined)}}'
   hook: '{{ENV.SLACK_HOOK}}'
-  enabled: '{{envExists(slack.hook)}}'
+  enabled: '{{envExists("SLACK_HOOK")}}'
   commandToken: '{{getEnv("SLACK_TOKEN", false)}}'
 sns:
   region: '{{ ENV.AWS_DEFAULT_REGION }}'
   clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
   secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
   topic: '{{ ENV.SNS_TOPIC }}'
-  enabled: '{{envExists(sns.topic)}}'
+  enabled: '{{envExists("SNS_TOPIC")}}'
