@@ -3,17 +3,17 @@ interval: 'every 10 seconds'
 retryDelay: 1000
 verbose: false
 ua: 'healthcheck'
-userAgent: '{{ENV.USER_AGENT || ""}}'
+userAgent: '{{getEnv("USER_AGENT", "")}}'
 logPath: '{{ENV.LOG_PATH}}'
 slack:
-  emoji: '{{ENV.SLACK_EMOJI || ":warning:"}}'
-  channel: '{{ENV.SLACK_CHANNEL || undefined}}'
+  emoji: '{{getEnv("SLACK_EMOJI", ":warning:")}}'
+  channel: '{{getEnv("SLACK_CHANNEL", undefined)}}'
   hook: '{{ENV.SLACK_HOOK}}'
-  enabled: '{{(slack.hook) ? true : false}}'
-  commandToken: '{{ENV.SLACK_TOKEN || false}}'
+  enabled: '{{envExists(slack.hook)}}'
+  commandToken: '{{getEnv("SLACK_TOKEN", false)}}'
 sns:
   region: '{{ ENV.AWS_DEFAULT_REGION }}'
   clientId: '{{ ENV.AWS_ACCESS_KEY_ID }}'
   secretId: '{{ ENV.AWS_SECRET_ACCESS_KEY }}'
   topic: '{{ ENV.SNS_TOPIC }}'
-  enabled: '{{(sns.topic) ? true : false}}'
+  enabled: '{{envExists(sns.topic)}}'

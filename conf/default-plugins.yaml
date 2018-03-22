@@ -1,24 +1,22 @@
 plugins:
   hapi-slack-command:
-    _enabled: '{{(slack.commandToken) ? true : false}}'
+    _enabled: '{{envExists(slack.commandToken)}}'
     token: '{{slack.commandToken}}'
   hapi-method-loader:
     _dependencies:
       - 'hapi-method-scheduler'
       - './lib/db'
   hapi-method-scheduler:
-    _dependencies:
     timezone: 'America/Los_Angeles'
     noParamsLength: true
     verbose: '{{verbose}}'
     schedule: []
   vision:
-    _dependencies:
-      - 'hapi-method-loader'
   './lib/healthcheck':
     _dependencies:
       - 'hapi-method-scheduler'
       - './lib/db'
+      - './lib/slack'
   './lib/db':
     logPath: '{{ logPath }}'
   inert:
@@ -74,3 +72,5 @@ plugins:
             - 'certificate-expiration'
             - 'sns'
   './lib/slack':
+    _dependencies:
+      - 'hapi-slack-command'
