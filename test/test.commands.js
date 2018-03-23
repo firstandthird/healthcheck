@@ -32,7 +32,7 @@ tap.test('/health (without any text) returns list of options', { timeout: 6000 }
   t.end();
 });
 
-tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
+tap.test('accepts health command "status"', async(t) => {
   // must update all and wait for results before checking with slack:
   const rapptor = new Rapptor({ env: 'test' });
   await rapptor.start();
@@ -53,7 +53,7 @@ tap.test('accepts health command "status"', { timeout: 6000 }, async(t) => {
   t.equal(response.result.attachments[0].title, 'http1', 'prints the correct text');
   t.end();
 });
-/*
+
 tap.test('accepts health command "check"', async(t) => {
   const rapptor = new Rapptor({ env: 'test' });
   await rapptor.start();
@@ -144,4 +144,3 @@ tap.test('accepts health command "certs"', { timeout: 6000 }, async(t) => {
   t.equal(Array.isArray(response.result.attachments), true);
   t.end();
 });
-*/
