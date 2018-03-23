@@ -42,6 +42,7 @@ async function handler(slackPayload, match) {
 
 module.exports = {
   expression: 'status',
+  priority: 0,
   handler,
   description: 'list last known status for each url'
 };

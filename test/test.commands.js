@@ -8,7 +8,7 @@ tap.afterEach(async() => {
   await server.stop();
 });
 
-tap.test('/health (without any text) returns list of options', { timeout: 6000 }, async(t) => {
+tap.test('/health (without any text) returns interactive menu of options', { timeout: 6000 }, async(t) => {
   const rapptor = new Rapptor({ env: 'test' });
   await rapptor.start();
   server = rapptor.server;
@@ -24,11 +24,15 @@ tap.test('/health (without any text) returns list of options', { timeout: 6000 }
       text: ''
     }
   });
-  t.equal(response.result, `Options:
-      status: list last known status for each url
-      check: re-runs health check for all urls
-      [name]: re-runs health check for the specified the url entry
-      certs: re-runs certification check for all urls`);
+  t.match(response.result, {
+    response_type: 'in_channel',
+    attachments: [{
+      text: 'Choose a command',
+      attachment_type: 'default',
+      callback_id: 'command'
+    }]
+  });
+  t.isA(response.result.attachments[0].actions, Array);
   t.end();
 });
 
@@ -77,7 +81,9 @@ tap.test('accepts individual urls', async(t) => {
   await rapptor.start();
   server = rapptor.server;
   server.methods.runall();
+  let called = false;
   server.methods.checkurl = (data) => {
+    called = true;
     t.deepEqual(data, { name: 'http1',
       url: 'http://localhost:8080/test/http',
       type: 'http',
@@ -88,7 +94,6 @@ tap.test('accepts individual urls', async(t) => {
       retryCount: 1,
       checkCount: 0
     });
-    t.end();
   };
   await server.inject({
     method: 'POST',
@@ -96,9 +101,12 @@ tap.test('accepts individual urls', async(t) => {
     payload: {
       token: process.env.SLACK_TOKEN,
       command: '/health',
-      text: 'http1'
+      text: 'check http1'
     }
   });
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  t.ok(called);
+  t.end();
 });
 
 tap.test('returns Not Found if no url by that name', { timeout: 6000 }, async(t) => {
@@ -112,7 +120,7 @@ tap.test('returns Not Found if no url by that name', { timeout: 6000 }, async(t)
     payload: {
       token: process.env.SLACK_TOKEN,
       command: '/health',
-      text: 'name'
+      text: 'check name'
     }
   });
   t.equal(response.statusCode, 404);

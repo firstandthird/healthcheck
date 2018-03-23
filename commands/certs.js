@@ -1,6 +1,7 @@
 // triggers certs check
 module.exports = {
   expression: 'certs',
+  priority: 0,
   async handler(slackPayload, match) {
     const response = await this.server.inject({
       method: 'GET',
