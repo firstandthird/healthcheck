@@ -1,0 +1,11 @@
+module.exports = {
+  expression: 'check',
+  async handler(slackPayload, match) {
+    await this.server.inject({
+      method: 'GET',
+      url: '/api/runall',
+    });
+    return 'Proceeding to update status for all urls....';
+  },
+  description: 're-runs health check for all urls'
+};
