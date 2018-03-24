@@ -1,5 +1,3 @@
-// note: since this expression matches everything, this file's name must be
-// the last one in alphabetical order in the /commands folder
 const boom = require('boom');
 
 // triggers a check of [name]

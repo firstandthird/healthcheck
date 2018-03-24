@@ -1,4 +1,5 @@
 const boom = require('boom');
+const tinyDate = require('tiny-relative-date');
 
 async function handler(slackPayload, match) {
   const response = await this.server.inject({
@@ -18,11 +19,12 @@ async function handler(slackPayload, match) {
     const item = res[key];
     const mostRecent = item.results[item.results.length - 1];
     const status = mostRecent.up ? 'UP' : 'DOWN';
+    const date = tinyDate(new Date(mostRecent.timestamp));
     const attachment = {
       title: key,
       fields: [
-        { title: 'Status', value: status },
-        { title: 'Last Checked', value: new Date(mostRecent.timestamp) },
+        { title: 'Status', value: status, short: true },
+        { title: 'Last Checked', value: date, short: true },
       ]
     };
     if (status === 'UP') {

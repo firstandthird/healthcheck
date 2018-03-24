@@ -1,5 +1,5 @@
 module.exports = {
-  expression: 'check',
+  expression: '^check$',
   priority: 1,
   async handler(slackPayload, match) {
     await this.server.inject({

@@ -20,11 +20,7 @@ module.exports = {
               },
               {
                 text: 're-run all certification checks',
-                value: 'cert'
-              },
-              {
-                text: 're-runs health check for all urls',
-                value: 'check'
+                value: 'certs'
               },
               {
                 text: 're-runs health check for all urls',

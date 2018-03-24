@@ -3,6 +3,7 @@ plugins:
     _enabled: '{{envExists("SLACK_TOKEN")}}'
     token: '{{slack.commandToken}}'
     commandDir: '{{CWD}}/commands'
+    callbackDir: '{{CWD}}/callbacks'
   hapi-method-loader:
     _dependencies:
       - 'hapi-method-scheduler'
