@@ -7,7 +7,7 @@ userAgent: '{{getEnv("USER_AGENT", "")}}'
 logPath: '{{ENV.LOG_PATH}}'
 slack:
   emoji: '{{getEnv("SLACK_EMOJI", ":warning:")}}'
-  channel: '{{getEnv("SLACK_CHANNEL", undefined)}}'
+  channel: '{{ENV.SLACK_CHANNEL || undefined}}'
   hook: '{{ENV.SLACK_HOOK}}'
   enabled: '{{envExists("SLACK_HOOK")}}'
   commandToken: '{{getEnv("SLACK_TOKEN", false)}}'
