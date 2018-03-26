@@ -71,6 +71,9 @@ module.exports = {
       delete status[data.name];
       db.put('status', status);
       tags.push('service-restored');
+      // also add a timestamp tag so that service-restored logs are never throttled
+      // this is for cases where a server keeps yo-yoing up and down:
+      tags.push(new Date().getTime());
       return server.log(tags, logData);
     }
 
