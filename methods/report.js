@@ -73,7 +73,7 @@ module.exports = {
       tags.push('service-restored');
       // also add a timestamp tag so that service-restored logs are never throttled
       // this is for cases where a server keeps yo-yoing up and down:
-      tags.push(new Date().getTime());
+      tags.push(new Date().getTime().toString());
       return server.log(tags, logData);
     }
 
