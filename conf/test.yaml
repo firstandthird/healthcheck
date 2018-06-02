@@ -4,3 +4,9 @@ urls:
     url: http://localhost:8080/test/http
     type: http
     interval: 'every 2 seconds'
+certificates:
+  -
+    name: 'http2'
+    url: http://localhost:8080/test/http
+    type: http
+    interval: 'every 2 seconds'
