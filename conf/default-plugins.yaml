@@ -4,6 +4,7 @@ plugins:
     token: '{{slack.commandToken}}'
     commandDir: '{{CWD}}/commands'
     callbackDir: '{{CWD}}/callbacks'
+    name: '{{slack.name}}'
   hapi-method-loader:
     _dependencies:
       - 'hapi-method-scheduler'
@@ -59,7 +60,7 @@ plugins:
           enabled: '{{slack.enabled}}'
           throttle: '{{1000 * 60 * 10}}'
           throttleBasedOnTags: true
-          username: 'HealthCheck'
+          username: '{{slack.name}}'
           hideTags: true
           slackHook: '{{slack.hook}}'
           tagColors:
