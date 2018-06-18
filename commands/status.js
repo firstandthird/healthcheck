@@ -9,7 +9,10 @@ async function handler(slackPayload, match) {
   if (response.statusCode !== 200) {
     throw boom.badImplementation(response.statusMessage);
   }
+  const settings = this.server.settings.app.slack;
   const send = {
+    username: settings.name,
+    icon_emoji: settings.emoji,
     response_type: 'in_channel',
     text: 'Server Statuses',
     attachments: []

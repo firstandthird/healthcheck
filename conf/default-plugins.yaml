@@ -4,6 +4,7 @@ plugins:
     token: '{{slack.commandToken}}'
     commandDir: '{{CWD}}/commands'
     callbackDir: '{{CWD}}/callbacks'
+    name: '{{slack.name}}'
   hapi-method-loader:
     _dependencies:
       - 'hapi-method-scheduler'
